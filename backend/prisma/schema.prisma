@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // Use your database provider here
+  url      = env("DATABASE_URL")
+}
+
+
+enum UserRole {
+  STUDENT
+  TEACHER
+  BOTH
+}
+
+model User {
+  id        String     @id @default(uuid())
+  username  String     @unique @db.VarChar(50)
+  password  String
+  roles     UserRole[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  courses   Course[]   @relation("CourseCreator")
+  enrollments Enrollment[]
+  reviews   Review[]
+}
+
+model Course {
+  id          String     @id @default(uuid())
+  title       String
+  description String
+  price       Float
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  creatorId   String
+  creator     User       @relation("CourseCreator", fields: [creatorId], references: [id])
+  lessons     Lesson[]
+  enrollments Enrollment[]
+  reviews     Review[]
+}
+
+model Lesson {
+  id          String     @id @default(uuid())
+  title       String
+  content     String
+  courseId    String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  course      Course     @relation(fields: [courseId], references: [id])
+}
+
+model Enrollment {
+  id        String     @id @default(uuid())
+  userId    String
+  courseId  String
+  createdAt DateTime   @default(now())
+
+  user      User       @relation(fields: [userId], references: [id])
+  course    Course     @relation(fields: [courseId], references: [id])
+}
+
+model Review {
+  id        String     @id @default(uuid())
+  content   String
+  rating    Int
+  userId    String
+  courseId  String
+  createdAt DateTime   @default(now())
+
+  user      User       @relation(fields: [userId], references: [id])
+  course    Course     @relation(fields: [courseId], references: [id])
+}
