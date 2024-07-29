@@ -1,0 +1,7 @@
+1- signup
+   a- check role base signup
+
+2- signin
+
+3- Add course if user signup as a teacher
+

@@ -5,17 +5,19 @@ import courseRouter from './routes/course'
 
 
 
+
 const app = express()
 const port = 5050
 
 //middlewares
 app.use(cors())
 app.use(express.json())
-app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: true }))
 
 //routes
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/course', courseRouter)
+
 
 app.get('/', (req, res) => {
   res.send('Hello, World!')

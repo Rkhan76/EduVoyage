@@ -9,8 +9,6 @@ import {DecodedToken} from "../types/type"
 export async function handleAuthentication(req: Request, res: Response, next: NextFunction) {
   const token = req.headers.authorization;
 
-  console.log("handle authentication : ", token)
-
   if (!token) {
     return res.status(STATUS_CODES.UNAUTHORIZED).json({
       success: false,
@@ -27,8 +25,6 @@ export async function handleAuthentication(req: Request, res: Response, next: Ne
         message: 'Invalid or expired token',
       })
     }
-
-    console.log("token : ", decodedToken)
 
     req.body.userDetails = decodedToken as DecodedToken
     next();

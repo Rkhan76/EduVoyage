@@ -11,3 +11,12 @@ export interface DecodedToken {
   username: string
   roles: string[]
 }
+
+export interface LessonBody {
+  title: string
+  content: string
+  videoUrl: string
+  videoLength: number
+  videoFormat: string
+  courseId: string
+}

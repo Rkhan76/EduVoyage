@@ -1,32 +1,94 @@
-import { Request, Response } from 'express';
-import { PrismaClient, UserRole  } from '@prisma/client';
+import { Request, Response } from 'express'
+import { PrismaClient, UserRole } from '@prisma/client'
 import STATUS_CODE from '../constant/httpStatusCode'
-import { AuthBody } from '../types/type';
-import { handleHashedPassword, handleComparePassword, handleGenerateToken } from '../utils/cred';
+import { AuthBody } from '../types/type'
+import { SignupZodCheck } from "../zod/zodCheck"
+import {
+  handleHashedPassword,
+  handleComparePassword,
+  handleGenerateToken,
+} from '../utils/cred'
 
-
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 export async function handleSignup(
   req: Request<any, any, AuthBody>,
   res: Response
 ) {
+  // Perform Zod validation
+  const validZodResult = SignupZodCheck.safeParse(req.body)
+
+  if (!validZodResult.success) {
+    // Extract Zod validation errors
+    const validationErrors = validZodResult.error.errors.map((error) => ({
+      path: error.path,
+      message: error.message,
+    }))
+
+    return res.status(STATUS_CODE.BAD_REQUEST).json({
+      success: false,
+      errors: validationErrors,
+    })
+  }
+
   const { username, password, role } = req.body
 
-  console.log(username, password) /// add zod validation
+
 
   try {
-
-    const userexit = await prisma.user.findFirst({
-      where:{
-        username
-      }
+    const existingUser = await prisma.user.findFirst({
+      where: { username },
     })
 
-    if(userexit){
-      return res.status(STATUS_CODE.CONFLICT).json({
-        success: false,
-        message: 'User already exits',
+    if (existingUser) {
+      if (existingUser.roles.includes(UserRole.BOTH)) {
+        return res.status(STATUS_CODE.CONFLICT).json({
+          success: false,
+          message: 'User already exists. Please sign in.',
+          existingUser,
+        })
+      }
+
+      if (
+        role === UserRole.STUDENT &&
+        existingUser.roles.includes(UserRole.STUDENT)
+      ) {
+        return res.status(STATUS_CODE.CONFLICT).json({
+          success: false,
+          message: 'User already exists as a Student.',
+          existingUser,
+        })
+      }
+
+      if (
+        role === UserRole.TEACHER &&
+        existingUser.roles.includes(UserRole.TEACHER)
+      ) {
+        return res.status(STATUS_CODE.CONFLICT).json({
+          success: false,
+          message: 'User already exists as a Teacher.',
+          existingUser,
+        })
+      }
+
+      const updatedUser = await prisma.user.update({
+        where: { username },
+        data: { roles: [UserRole.BOTH] },
+      })
+
+      if (!updatedUser) {
+        return res.status(STATUS_CODE.CONFLICT).json({
+          success: false,
+          message: `Something went wrong while registering as a ${role}.`,
+        })
+      }
+
+      return res.status(STATUS_CODE.ACCEPTED).json({
+        success: true,
+        message: `Successfully registered as a ${
+          role ? role : "STUDENT"
+        }.`,
+        updatedUser,
       })
     }
 
@@ -40,22 +102,26 @@ export async function handleSignup(
       },
     })
 
-if(!newUser){
-    return res.status(STATUS_CODE.BAD_REQUEST).json({
-      success: false,
-      error: 'Unable to process the request',
+    if (!newUser) {
+      return res.status(STATUS_CODE.BAD_REQUEST).json({
+        success: false,
+        error: 'Unable to process the request.',
+      })
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `User created successfully as ${role===undefined ? "student" : role}`,
+      user: newUser,
     })
-}
-
-
-    return res
-      .status(200)
-      .json({ message: 'User created successfully', user: newUser })
   } catch (error) {
     console.error('Error creating user:', error)
-    return res.status(500).json({ error: 'Failed to create user' })
+    return res.status(500).json({
+      success: false,
+      error: 'Failed to create user.',
+    })
   } finally {
-    await prisma.$disconnect() 
+    await prisma.$disconnect()
   }
 }
 
@@ -87,17 +153,20 @@ export async function handleSignin(
         message: 'Invalid email/password. Please try again.',
       })
     }
- 
-    
-    const token = await handleGenerateToken({ userId: user.id, username, roles: user.roles})
+
+    const token = await handleGenerateToken({
+      userId: user.id,
+      username,
+      roles: user.roles,
+    })
 
     // Continue with your login logic, e.g., generating a token
     return res.status(STATUS_CODE.OK).json({
       success: true,
       message: 'Signed in successfully',
-       user:{
+      user: {
         username,
-        token
+        token,
       },
     })
   } catch (error) {

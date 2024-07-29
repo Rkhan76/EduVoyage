@@ -47,11 +47,15 @@ model Lesson {
   title       String
   content     String
   courseId    String
+  videoUrl    String     // URL to the video file
+  videoLength Int        // Length of the video in seconds
+  videoFormat String     // Format of the video (e.g., mp4, avi)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 
   course      Course     @relation(fields: [courseId], references: [id])
 }
+
 
 model Enrollment {
   id        String     @id @default(uuid())
