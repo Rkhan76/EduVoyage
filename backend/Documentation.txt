@@ -1,0 +1,13 @@
+** EduVoyage -- A course selling application ** 
+
+A - Courses
+ 1- Add the course                    [ only registered teacher can add the course]
+ 2- View the course                   [ any one can view the course details ]
+ 3- update the course                 [ only teacher which create the course can update the course ]
+ 4- delete the course                 [ only teacher which create the course can delete the course]
+
+B - Lessons
+ 1- Add the lesson                    [ only registered teacher can add the course]
+ 2- View the lesson                   [ any one can view the course details ]
+ 3- update the lesson                [ only teacher which create the course can update the lesson ]
+ 4- delete the lesson                 [ only teacher which create the course can delete the lesson]

@@ -1,7 +1,41 @@
 1- signup
-   a- check role base signup
-
 2- signin
+3- course
+4- lesson
+5- payment
 
-3- Add course if user signup as a teacher
+
+**** working in progress  and work has done *********
+
+C- COURSES
+   1- add the course       @done     12-09-2024
+   2- view the course      @done     12-09-2024
+   3- update the course    @done     12-09-2024
+   5- delete the course    @done     12-09-2024
+
+D- LESSONS
+   1- add the lesson      @done     12-09-2024
+   2- view the lesson     @done     12-09-2024
+   3- update the lesson   @done     12-09-2024
+   5- delete the lesson   @done     12-09-2024
+  
+
+
+
+
+//// routes
+
+***** SIGNUP & SIGIN *****
+/api/v1/user/signup
+/api/v1/user/signin
+
+
+
+******* COURSE & LESSONS ********
+/api/v1/course/add     -- create course
+/api/v1/course/view/:id     -- view course
+/api/v1/course/lesson/add     -- add lesson to the course
+/api/v1/course/add     -- create course
+
+
 
