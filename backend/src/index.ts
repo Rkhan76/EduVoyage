@@ -20,7 +20,7 @@ app.use('/api/v1/course', courseRouter)
 
 
 app.get('/', (req, res) => {
-  res.send('Hello, World!')
+  res.send(`<h1>Welcome to backend of EduVoyage</h1>`)
 })
 
 app.listen(port, () => {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 
-export function handleCourseEnrollment(req: Request, res: Response){
-
+export function handleEnrollmentInCourse(req: Request, res: Response){
+     
     
 }

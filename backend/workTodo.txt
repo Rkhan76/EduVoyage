@@ -6,6 +6,11 @@
 
 
 **** working in progress  and work has done *********
+A- SIGNUP
+   1- add signup          @done      unknown
+
+B- SIGNUP
+   1- add signinp          @done     unknown
 
 C- COURSES
    1- add the course       @done     12-09-2024
@@ -18,6 +23,12 @@ D- LESSONS
    2- view the lesson     @done     12-09-2024
    3- update the lesson   @done     12-09-2024
    5- delete the lesson   @done     12-09-2024
+
+E- ENROLLMENT
+   1- enroll in the course
+
+F- PAYMENT
+   1- add payment gateway to your application
   
 
 
@@ -32,10 +43,10 @@ D- LESSONS
 
 
 ******* COURSE & LESSONS ********
-/api/v1/course/add     -- create course
-/api/v1/course/view/:id     -- view course
-/api/v1/course/lesson/add     -- add lesson to the course
-/api/v1/course/add     -- create course
+/api/v1/course/add           -- create course
+/api/v1/course/view/:id      -- view course
+/api/v1/course/lesson/add    -- add lesson to the course
+/api/v1/course/add           -- create course
 
 
 
