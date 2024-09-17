@@ -1,0 +1,29 @@
+src/
+├── assets/                # Static assets (images, fonts, etc.)
+│   ├── images/
+│   └── fonts/
+├── components/            # Reusable UI components
+│   ├── Button.js
+│   └── Navbar.js
+├── pages/                 # Page components for routing
+│   ├── HomePage.js
+│   ├── SigninPage.js
+│   └── SignupPage.js
+├── services/              # API service files
+│   ├── authService.js
+│   ├── courseService.js
+│   └── userService.js
+├── hooks/                 # Custom hooks
+│   ├── useAuth.js
+│   └── useCourses.js
+├── context/               # Context providers and consumers
+│   ├── AuthContext.js
+│   └── CourseContext.js
+├── utils/                 # Utility functions and helpers
+│   ├── formatDate.js
+│   └── validateInput.js
+├── App.js                 # Main application component
+├── index.js               # Entry point for React
+└── routes.js              # Application routes configuration
+
+

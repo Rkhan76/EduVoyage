@@ -1,7 +1,13 @@
 import { NavLink } from 'react-router-dom'
-import Button from './Button'
+import Button from '../components/Button'
+import { useRecoilValue } from 'recoil'
+import { IsSingnedIn } from '../store/atoms/IsSignedIn'
 
 const Navbar = () => {
+  const isSignedIn = useRecoilValue(IsSingnedIn)
+
+  console.log("is signedin : ",isSignedIn)
+
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -95,18 +101,28 @@ const Navbar = () => {
               Teach on EduVoyage
             </NavLink>
           </li>
-          <li>
-            <Button
-              text="login"
-              tailwindcss=" bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-            />
-          </li>
-          <li>
-            <Button
-              text="signup"
-              tailwindcss="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-            />
-          </li>
+          {isSignedIn ? (
+            <h1>hllo</h1>
+          ) : (
+            <>
+              <li>
+                <NavLink to="/signin">
+                  <Button
+                    text="login"
+                    tailwindcss=" bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                  />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/signup">
+                  <Button
+                    text="signup"
+                    tailwindcss="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+                  />
+                </NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </nav>

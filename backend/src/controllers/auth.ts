@@ -15,23 +15,26 @@ export async function handleSignup(
   req: Request<any, any, AuthBody>,
   res: Response
 ) {
-  // Perform Zod validation
-  const validZodResult = SignupZodCheck.safeParse(req.body)
+  // // Perform Zod validation
+  // const validZodResult = SignupZodCheck.safeParse(req.body)
 
-  if (!validZodResult.success) {
-    // Extract Zod validation errors
-    const validationErrors = validZodResult.error.errors.map((error) => ({
-      path: error.path,
-      message: error.message,
-    }))
+  // if (!validZodResult.success) {
+  //   // Extract Zod validation errors
+  //   const validationErrors = validZodResult.error.errors.map((error) => ({
+  //     path: error.path,
+  //     message: error.message,
+  //   }))
 
-    return res.status(STATUS_CODE.BAD_REQUEST).json({
-      success: false,
-      errors: validationErrors,
-    })
-  }
+  //   return res.status(STATUS_CODE.BAD_REQUEST).json({
+  //     success: false,
+  //     errors: validationErrors,
+  //   })
+  // }
+
 
   const { username, password, role } = req.body
+
+  console.log(username, password, role)
 
 
 
