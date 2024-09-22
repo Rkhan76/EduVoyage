@@ -1,9 +1,10 @@
 import {UserRole} from "@prisma/client"
 
 export interface AuthBody {
+  fullname: string
   username: string
   password: string
-  role?: UserRole 
+  role?: UserRole
 }
 
 export interface DecodedToken {

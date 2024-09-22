@@ -10,6 +10,7 @@ import ContactUs from './pages/ContactUs'
 import Footer from './components/Footer'
 import Signup from './pages/Signup'
 import Signin from './pages/Signin'
+import Try from './pages/Try'
 
 function App() {
   return (
@@ -26,9 +27,9 @@ function App() {
               <Route path="/contact-us" element={<ContactUs />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/signin" element={<Signin />} />
+              <Route path="/try" element={<Try />} /> {/* Fixed here */}
             </Routes>
           </main>
-          {/* The Footer is outside the Routes */}
           <Footer />
         </div>
       </Router>
@@ -36,4 +37,4 @@ function App() {
   )
 }
 
-export default React.memo(App) // Wrap App with memo as well
+export default React.memo(App)

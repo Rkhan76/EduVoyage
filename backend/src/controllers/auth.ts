@@ -32,9 +32,9 @@ export async function handleSignup(
   // }
 
 
-  const { username, password, role } = req.body
+  const { username, password, role, fullname } = req.body
 
-  console.log(username, password, role)
+  console.log(username, password, role, fullname)
 
 
 
@@ -99,6 +99,7 @@ export async function handleSignup(
 
     const newUser = await prisma.user.create({
       data: {
+        fullname,
         username,
         password: hashedPassword,
         roles: role ? [role] : [UserRole.STUDENT],

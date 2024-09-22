@@ -9,42 +9,46 @@ interface CourseBody {
   title: string
   description: string
   price: number
+  domain: string[] // Change this to string[]
+  subDomain: string
   creatorId: string
   userDetails: DecodedToken
 }
+
 
 export async function handleCreateCourse(
   req: Request<any, any, CourseBody>,
   res: Response
 ) {
+  const { title, description, price, domain, subDomain } = req.body;
+  const { userId } = req.body.userDetails;
 
-  const { title, description, price} = req.body
-  const { userId } = req.body.userDetails
-
-  // add zode valiation
   try {
     const course = await prisma.course.create({
       data: {
         title,
         description,
         price,
+        domain, // Ensure this is an array of strings, e.g., ["Development"]
+        subDomain,
         creatorId: userId,
       },
-    })
+    });
 
     return res.json({
       success: true,
       message: "Course created successfully",
-      course
-    })
+      course,
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).json({
       success: false,
-      message: 'Something wrong with server',
-    })
+      message: 'Something went wrong with the server',
+    });
   }
 }
+
 
 export async function handleViewCourse(req: Request, res: Response) {
   const courseId: string = req.params.id

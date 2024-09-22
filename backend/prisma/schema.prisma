@@ -14,8 +14,12 @@ enum UserRole {
   BOTH
 }
 
+
+
+
 model User {
   id        String     @id @default(uuid())
+  fullname  String
   username  String     @unique @db.VarChar(50)
   password  String
   roles     UserRole[]
@@ -31,15 +35,18 @@ model Course {
   id          String     @id @default(uuid())
   title       String
   description String
+  domainId    String
+  subdomainId String
+  domain      Domain     @relation(fields: [domainId], references: [id])
+  subdomain   Subdomain  @relation(fields: [subdomainId], references: [id])
   price       Float
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-
   creatorId   String
   creator     User       @relation("CourseCreator", fields: [creatorId], references: [id])
   lessons     Lesson[]
   enrollments Enrollment[]
   reviews     Review[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now()) @updatedAt
 }
 
 model Lesson {
@@ -78,3 +85,19 @@ model Review {
   user      User       @relation(fields: [userId], references: [id])
   course    Course     @relation(fields: [courseId], references: [id])
 }
+
+model Domain {
+  id        String      @id @default(uuid())
+  name      String      @unique
+  subdomains Subdomain[] // One-to-Many relationship with Subdomain
+  courses   Course[]    // One-to-Many relationship with Course
+}
+
+model Subdomain {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  domainId  String
+  domain    Domain    @relation(fields: [domainId], references: [id])
+  courses   Course[]  // One-to-Many relationship with Course
+}
+

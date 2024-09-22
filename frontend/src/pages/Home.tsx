@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import HomePageImage1 from '../assets/homepageImage1.jpg'
-import SubDomain from '../components/SubDomain'
 import Card from '../components/Card'
+
+const domain = [
+  'Development',
+  'IT Certifications',
+  'Leadership',
+  'Data Science',
+  'Communication',
+  'Business Analytics & Intelligence',
+]
 
 const subdomains = [
   'Web Development',
@@ -22,57 +30,44 @@ const cardData = [
     teacher: 'Jane Doe',
     price: '$199',
   },
-  {
-    courseCoverImg: 'https://example.com/images/course2.jpg',
-    title: 'Advanced iOS Development',
-    teacher: 'John Smith',
-    price: '$299',
-  },
-  {
-    courseCoverImg: 'https://example.com/images/course3.jpg',
-    title: 'Android Development Bootcamp',
-    teacher: 'Alice Johnson',
-    price: '$249',
-  },
-  {
-    courseCoverImg: 'https://example.com/images/course4.jpg',
-    title: 'Frontend Mastery',
-    teacher: 'Bob Brown',
-    price: '$179',
-  },
-  {
-    courseCoverImg: 'https://example.com/images/course5.jpg',
-    title: 'Backend Development with Node.js',
-    teacher: 'Charlie Davis',
-    price: '$219',
-  },
-  {
-    courseCoverImg: 'https://example.com/images/course6.jpg',
-    title: 'Full Stack Development',
-    teacher: 'Emily Wilson',
-    price: '$349',
-  },
-  {
-    courseCoverImg: 'https://example.com/images/course7.jpg',
-    title: 'Game Development with Unity',
-    teacher: 'Michael Lee',
-    price: '$399',
-  },
-  {
-    courseCoverImg: 'https://example.com/images/course8.jpg',
-    title: 'Mobile Development Essentials',
-    teacher: 'Sarah Clark',
-    price: '$159',
-  },
-  {
-    courseCoverImg: 'https://example.com/images/course9.jpg',
-    title: 'DevOps and Continuous Delivery',
-    teacher: 'David Martinez',
-    price: '$259',
-  },
+  // More card data here...
 ]
 
 const Home: React.FC = () => {
+  const [activeTitle, setActiveTitle] = useState<string | null>(null)
+  const [activeSubdomain, setActiveSubdomain] = useState<string | null>(null)
+
+  // Function to handle domain click
+  const handleDomainClick = (title: string) => {
+    setActiveTitle(title)
+  }
+
+  // Function to handle subdomain click
+  const handleSubdomainClick = (subdomain: string) => {
+    setActiveSubdomain(subdomain)
+    // Fetch data or perform any action you want on click
+  }
+
+  // Automatically hit the API and set "Web Development" and "Development" active when the page loads
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://api.example.com/data') // Replace with your API URL
+        const data = await response.json()
+        console.log('API Data:', data)
+        // You can set any state with the API data if needed here
+      } catch (error) {
+        console.error('Error fetching API:', error)
+      }
+    }
+
+    fetchData()
+
+    // Set "Web Development" and "Development" as the active subdomain and domain when the page loads
+    setActiveSubdomain('Web Development')
+    setActiveTitle('Development')
+  }, []) // Empty dependency array ensures this runs once when the component mounts
+
   return (
     <div className="p-8">
       <img
@@ -85,42 +80,46 @@ const Home: React.FC = () => {
           All the skills you need in one place
         </h1>
         <h6 className="text-lg text-gray-700 mb-6">
-          From critical skills to technical topics, Udemy supports your
+          From critical skills to technical topics, EduVoyage supports your
           professional development.
         </h6>
-        <div className="mb-6 flex  justify-evenly">
-          <div className="p-3 bg-gray-500 rounded-3xl">
-            <h3 className="text-2xl font-semibold mb-2">Development</h3>
-          </div>
 
-          <div className="p-3 bg-gray-500 rounded-3xl">
-            <h3 className="text-2xl font-semibold mb-2">IT Certifications</h3>
-          </div>
-
-          <div className="p-3 bg-gray-500 rounded-3xl">
-            <h3 className="text-2xl font-semibold mb-2">Leadership</h3>
-          </div>
-
-          <div className="p-3 bg-gray-500 rounded-3xl">
-            <h3 className="text-2xl font-semibold mb-2">Data Science</h3>
-          </div>
-
-          <div className="p-3 bg-gray-500 rounded-3xl">
-            <h3 className="text-2xl font-semibold mb-2">Communication</h3>
-          </div>
-
-          <div className="p-3 bg-gray-500 rounded-3xl">
-            <h3 className="text-2xl font-semibold mb-2">
-              Business Analytics & Intelligence
-            </h3>
-          </div>
+        {/* Domain Section */}
+        <div className="mb-6 flex justify-evenly">
+          {domain.map((title, index) => (
+            <div
+              key={index}
+              className="p-3 bg-gray-500 rounded-3xl cursor-pointer"
+              onClick={() => handleDomainClick(title)}
+            >
+              <h3
+                className={`text-2xl font-semibold mb-2 ${
+                  activeTitle === title ? 'text-red-500' : 'text-black'
+                }`}
+              >
+                {title}
+              </h3>
+            </div>
+          ))}
         </div>
 
+        {/* Subdomain Section */}
         <ul className="flex flex-wrap justify-evenly mb-6">
           {subdomains.map((subdomain, index) => (
-            <SubDomain index={index} subdomain={subdomain} />
+            <li key={index}>
+              <h3
+                className={`text-2xl font-semibold mb-2 cursor-pointer ${
+                  activeSubdomain === subdomain ? 'text-red-500' : 'text-black'
+                }`}
+                onClick={() => handleSubdomainClick(subdomain)}
+              >
+                {subdomain}
+              </h3>
+            </li>
           ))}
         </ul>
+
+        {/* Card Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {cardData.map((card, index) => (
             <Card
