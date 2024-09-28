@@ -8,8 +8,8 @@ import TermsCondition from './pages/TermsConditon'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import ContactUs from './pages/ContactUs'
 import Footer from './components/Footer'
-import Signup from './pages/Signup'
-import Signin from './pages/Signin'
+import SigninPage from "./pages/SigninPage"
+import SingupPage from "./pages/SingupPage"
 import Try from './pages/Try'
 
 function App() {
@@ -25,8 +25,8 @@ function App() {
               <Route path="/terms-condition" element={<TermsCondition />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/contact-us" element={<ContactUs />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/signin" element={<Signin />} />
+              <Route path="/signin" element={<SigninPage />}></Route>
+              <Route path="/signup" element={<SingupPage/>}></Route>
               <Route path="/try" element={<Try />} /> {/* Fixed here */}
             </Routes>
           </main>

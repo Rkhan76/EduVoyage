@@ -1,13 +1,15 @@
 import axios from 'axios'
 import Cookies from "js-cookie"
+import { SignupParams, SinginParams } from "@rkhan76/common"
 
 
 const BASE_URL = import.meta.env.VITE_API_URL
 
 
-export const signupUser = async ({ fullname, username, password }: AuthB) => {
+export const signupUser = async ({ fullname, username, password }: SignupParams) => {
   try {
     const response = await axios.post(`${BASE_URL}/user/signup`, {
+      fullname,
       username,
       password,
     })
@@ -26,16 +28,18 @@ export const signupUser = async ({ fullname, username, password }: AuthB) => {
 
 
 
-export const signinUser = async ({ username, password }) => {
+export const signinUser = async ({ username, password }: SinginParams) => {
   try {
     const response = await axios.post(`${BASE_URL}/user/signin`, {
       username,
       password,
     })
 
+    console.log(response)
     if (response.status === 200) {
-      const token = response.data.user.token
+      const token = response.data.userData.token
       Cookies.set('token', token, { expires: 7, path: '/' })
+      console.log(Cookies)
       return response.data
     } else {
       throw new Error('Unexpected response status')
