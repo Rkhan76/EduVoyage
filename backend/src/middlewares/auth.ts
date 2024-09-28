@@ -7,16 +7,16 @@ import {DecodedToken} from "../types/type"
 
 
 export async function handleAuthentication(req: Request, res: Response, next: NextFunction) {
-  const token = req.headers.authorization;
+  const authHeader = req.headers.authorization
 
-  console.log(token + "token has been reacher")
-
-  if (!token) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(STATUS_CODES.UNAUTHORIZED).json({
       success: false,
       message: 'You are not authorized to access this route',
-    })    
+    })
   }
+
+  const token = authHeader.split(' ')[1]
 
   try {
     const decodedToken = await handleVerifyToken(token);
