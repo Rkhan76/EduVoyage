@@ -6,12 +6,13 @@ import { SignupParams, SinginParams } from "@rkhan76/common"
 const BASE_URL = import.meta.env.VITE_API_URL
 
 
-export const signupUser = async ({ fullname, username, password }: SignupParams) => {
+export const signupUser = async ({ fullname, username, password, role }: SignupParams) => {
   try {
     const response = await axios.post(`${BASE_URL}/user/signup`, {
       fullname,
       username,
       password,
+      role
     })
 
     if (response.status === 200) {

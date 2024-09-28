@@ -91,7 +91,7 @@ const Navbar = () => {
           </li>
           <li className="flex flex-col justify-center">
             <NavLink
-              to="/about"
+              to="/teachersignup"
               className={({ isActive }) =>
                 isActive
                   ? 'text-yellow-400 hover:text-yellow-500'

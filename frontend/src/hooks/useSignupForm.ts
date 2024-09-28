@@ -1,12 +1,16 @@
-import { useState } from "react"
+import { useState } from 'react'
 
-export const useSignupForm=()=>{
-    const [formData, setFormData] = useState({ fullname: "", username: "", password: ""})
+export const useSignupForm = () => {
+  const [formData, setFormData] = useState({
+    fullname: '',
+    username: '',
+    password: '',
+  })
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target
-      setFormData((prevData) => ({ ...prevData, [name]: value }))
-    }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData((prevData) => ({ ...prevData, [name]: value }))
+  }
 
-    return { formData, handleInputChange }
+  return { formData, handleInputChange, setFormData }
 }

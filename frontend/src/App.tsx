@@ -26,7 +26,8 @@ function App() {
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/contact-us" element={<ContactUs />} />
               <Route path="/signin" element={<SigninPage />}></Route>
-              <Route path="/signup" element={<SingupPage/>}></Route>
+              <Route path="/signup" element={<SingupPage />}></Route>
+              <Route path="/teachersignup" element={<SingupPage />} />
               <Route path="/try" element={<Try />} /> {/* Fixed here */}
             </Routes>
           </main>
