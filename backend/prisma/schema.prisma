@@ -32,21 +32,19 @@ model User {
 }
 
 model Course {
-  id          String     @id @default(uuid())
-  title       String
-  description String
-  domainId    String
-  subdomainId String
-  domain      Domain     @relation(fields: [domainId], references: [id])
-  subdomain   Subdomain  @relation(fields: [subdomainId], references: [id])
-  price       Float
-  creatorId   String
-  creator     User       @relation("CourseCreator", fields: [creatorId], references: [id])
-  lessons     Lesson[]
-  enrollments Enrollment[]
-  reviews     Review[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @default(now()) @updatedAt
+  id             String     @id @default(uuid())
+  title          String
+  description    String
+  domainName     String
+  subdomainName  String[]
+  price          Float
+  creatorId      String
+  creator        User       @relation("CourseCreator", fields: [creatorId], references: [id])
+  lessons        Lesson[]
+  enrollments    Enrollment[]
+  reviews        Review[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @default(now()) @updatedAt
 }
 
 model Lesson {
@@ -89,8 +87,8 @@ model Review {
 model Domain {
   id        String      @id @default(uuid())
   name      String      @unique
-  subdomains Subdomain[] // One-to-Many relationship with Subdomain
-  courses   Course[]    // One-to-Many relationship with Course
+  subdomains Subdomain[] 
+  courses    String[]
 }
 
 model Subdomain {
@@ -98,6 +96,6 @@ model Subdomain {
   name      String    @unique
   domainId  String
   domain    Domain    @relation(fields: [domainId], references: [id])
-  courses   Course[]  // One-to-Many relationship with Course
+  courses   String[]  
 }
 

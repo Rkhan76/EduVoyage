@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
-import STATUS_CODE from '../constant/httpStatusCode'
 import { PrismaClient } from '@prisma/client'
-import { DecodedToken } from "../types/type"
+import { DecodedToken } from '../types/type'
 
 const prisma = new PrismaClient()
 
@@ -9,46 +8,116 @@ interface CourseBody {
   title: string
   description: string
   price: number
-  domain: string[] // Change this to string[]
-  subDomain: string
-  creatorId: string
-  userDetails: DecodedToken
+  domain: string // Domain name
+  subDomains: string[] // Array of Subdomain names
+  userDetails: DecodedToken // Ensure this is defined correctly
 }
-
 
 export async function handleCreateCourse(
   req: Request<any, any, CourseBody>,
   res: Response
 ) {
-  const { title, description, price, domain, subDomain } = req.body;
-  const { userId } = req.body.userDetails;
+  const { title, description, price, domain, subDomains } = req.body
+  const { userId }: { userId: string } = req.body.userDetails
+
+  // Ensure subDomains is an array
+  if (!Array.isArray(subDomains)) {
+    return res.status(400).json({
+      success: false,
+      message: 'subDomains must be an array.',
+    })
+  }
 
   try {
-    const course = await prisma.course.create({
-      data: {
-        title,
-        description,
-        price,
-        domain, // Ensure this is an array of strings, e.g., ["Development"]
-        subDomain,
-        creatorId: userId,
-      },
-    });
+    const result = await prisma.$transaction(async (prisma) => {
+      // Check if the domain exists
+      const foundDomain = await prisma.domain.findUnique({
+        where: { name: domain },
+      })
+
+      if (!foundDomain) {
+        return res.status(404).json({
+          success: false,
+          message: 'Domain not found. Please enter a valid domain.',
+        })
+      }
+
+      // Check for valid subdomains
+      const invalidSubdomains = []
+      const validSubdomainIds = []
+
+      for (const subDomain of subDomains) {
+        const foundSubDomain = await prisma.subdomain.findUnique({
+          where: { name: subDomain },
+        })
+
+        if (!foundSubDomain) {
+          invalidSubdomains.push(subDomain)
+        } else {
+          validSubdomainIds.push(foundSubDomain.id)
+        }
+      }
+
+      // If there are invalid subdomains, return an error
+      if (invalidSubdomains.length > 0) {
+        return res.status(400).json({
+          success: false,
+          message: `Invalid subdomains: ${invalidSubdomains.join(', ')}`,
+        })
+      }
+
+      // Create the course and associate with the domain and subdomains
+      const course = await prisma.course.create({
+        data: {
+          title,
+          description,
+          price,
+          domainName: domain,
+          subdomainName: subDomains, // Store subdomain names as an array
+          creatorId: userId,
+        },
+      })
+
+      // Add the course ID to the domain's courses array
+      await prisma.domain.update({
+        where: { name: domain },
+        data: {
+          courses: {
+            push: course.id,
+          },
+        },
+      })
+
+      // Add the course ID to each subdomain's courses array
+      for (const subDomain of subDomains) {
+        await prisma.subdomain.update({
+          where: { name: subDomain },
+          data: {
+            courses: {
+              push: course.id,
+            },
+          },
+        })
+      }
+
+      return course
+    })
 
     return res.json({
       success: true,
-      message: "Course created successfully",
-      course,
-    });
+      message: 'Course created successfully',
+      course: result,
+    })
   } catch (error) {
-    console.log(error);
+    console.error(error)
     return res.status(500).json({
       success: false,
       message: 'Something went wrong with the server',
-    });
+    })
+  } finally {
+    await prisma.$disconnect()
   }
 }
-
 
 export async function handleViewCourse(req: Request, res: Response) {
   const courseId: string = req.params.id
@@ -96,8 +165,7 @@ export async function handleUpdateCourse(
   req: Request<any, any, CourseBody>,
   res: Response
 ) {
-
-  console.log("update page here")
+  console.log('update page here')
 
   const id: string = req.params.id
   const { title, description, price } = req.body
@@ -107,7 +175,7 @@ export async function handleUpdateCourse(
   try {
     const updateCourse = await prisma.course.update({
       where: {
-        id, 
+        id,
       },
       data: {
         title,

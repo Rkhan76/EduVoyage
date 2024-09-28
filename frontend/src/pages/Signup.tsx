@@ -6,16 +6,17 @@ import { useNavigate } from 'react-router-dom'
 
 const Signup = () => {
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({ username: '', password: '' })
+  const [formData, setFormData] = useState({ fullname: '', username: '', password: '' })
   const [error, setError] = useState(null) // Initialize error as null
   const [loading, setLoading] = useState(false)
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prevData) => ({ ...prevData, [name]: value }))
   }
 
-  const handleSubmit = async (e) => {
+  // Fix the event type here
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
@@ -23,7 +24,7 @@ const Signup = () => {
     try {
       const result = await signupUser(formData)
       if (result) {
-        navigate("/signin")
+        navigate('/signin')
         setFormData({ username: '', password: '' })
       }
     } catch (err) {
@@ -47,7 +48,7 @@ const Signup = () => {
         <div className="w-1/2 p-6 flex flex-col justify-center">
           <form
             className="bg-white rounded-lg shadow-md p-6"
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit} // No need to change this part
           >
             <label className="block mb-2 text-gray-700 font-bold">
               FullName
@@ -55,6 +56,7 @@ const Signup = () => {
             <input
               type="text"
               name="fullName"
+              onChange={handleChange}
               className="w-full p-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <label className="block mb-2 text-gray-700 font-bold">

@@ -1,7 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import HomePageImage1 from '../assets/homepageImage1.jpg'
 import Card from '../components/Card'
+import { handlefetchDomainNameOnly } from '../services/domain'
 
+
+// "data": [
+//         {
+//             "id": "a8a29ecd-ac50-4686-aeda-b2dbcaefd3b2",
+//             "name": "Data Science",
+//             "courses": []
+//         },
+//         {
+//             "id": "1110c153-9ee5-4e81-83ba-27beb8e9522e",
+//             "name": "Mobile Development",
+//             "courses": []
+//         },
+//         {
+//             "id": "34041bff-1e75-4321-82ab-293b03a6bf82",
+//             "name": "Web Development",
+//             "courses": [
+//                 "97328206-ca92-4be0-a197-f0115e0a0db0",
+//                 "692b6334-1402-4cbe-8b6c-0d7b7810ca61"
+//             ]
+//         }
+//     ]
 const domain = [
   'Development',
   'IT Certifications',
@@ -48,25 +70,19 @@ const Home: React.FC = () => {
     // Fetch data or perform any action you want on click
   }
 
-  // Automatically hit the API and set "Web Development" and "Development" active when the page loads
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://api.example.com/data') // Replace with your API URL
-        const data = await response.json()
-        console.log('API Data:', data)
-        // You can set any state with the API data if needed here
-      } catch (error) {
-        console.error('Error fetching API:', error)
-      }
-    }
+   useEffect(() => {
+     const fetchData = async () => {
+       const domains = await handlefetchDomainNameOnly()
 
-    fetchData()
+       // Optionally handle the fetched domains data here
+       console.log(domains)
 
-    // Set "Web Development" and "Development" as the active subdomain and domain when the page loads
-    setActiveSubdomain('Web Development')
-    setActiveTitle('Development')
-  }, []) // Empty dependency array ensures this runs once when the component mounts
+       setActiveSubdomain('Web Development')
+       setActiveTitle('Development')
+     }
+
+     fetchData()
+   }, [])
 
   return (
     <div className="p-8">

@@ -9,6 +9,8 @@ import {DecodedToken} from "../types/type"
 export async function handleAuthentication(req: Request, res: Response, next: NextFunction) {
   const token = req.headers.authorization;
 
+  console.log(token + "token has been reacher")
+
   if (!token) {
     return res.status(STATUS_CODES.UNAUTHORIZED).json({
       success: false,

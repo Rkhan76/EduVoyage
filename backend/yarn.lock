@@ -107,6 +107,13 @@
   dependencies:
     "@prisma/debug" "5.16.2"
 
+"@rkhan76/common@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@rkhan76/common/-/common-1.0.5.tgz#c29a3dbe7873f118ca6331b6de31e271cc36f6a0"
+  integrity sha512-QukIi5avaVhl9s2tSpiU5WNf9xQI2db6uOLzQ2gSfOhXOKtBOgKgF+w46VUhYxcAAddpDuqICTBtnYjnclU+aQ==
+  dependencies:
+    zod "^3.23.8"
+
 "@tsconfig/node10@^1.0.7":
   version "1.0.11"
   resolved "https://registry.npmjs.org/@tsconfig/node10/-/node10-1.0.11.tgz"

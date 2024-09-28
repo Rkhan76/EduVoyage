@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import userRouter from './routes/user'
 import courseRouter from './routes/course'
+import domainRouter from './routes/domain'
 
 
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }))
 //routes
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/course', courseRouter)
+app.use('/api/v1/', domainRouter)
 
 
 app.get('/', (req, res) => {
