@@ -12,5 +12,13 @@ export const useSignupForm = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }))
   }
 
-  return { formData, handleInputChange, setFormData }
+  const resetFormData = () => {
+    setFormData({
+      fullname: '',
+      username: '',
+      password: '',
+    })
+  }
+
+  return { formData, handleInputChange, resetFormData }
 }

@@ -15,7 +15,7 @@ export const signupUser = async ({ fullname, username, password, role }: SignupP
       role
     })
 
-    if (response.status === 200) {
+    if (response.data.success === true) {
       console.log("response  is here : ", response)
       return response.data
     } else {

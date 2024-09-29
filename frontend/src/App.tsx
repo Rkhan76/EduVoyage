@@ -8,9 +8,11 @@ import TermsCondition from './pages/TermsConditon'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import ContactUs from './pages/ContactUs'
 import Footer from './components/Footer'
-import SigninPage from "./pages/SigninPage"
-import SingupPage from "./pages/SingupPage"
+import SigninPage from './pages/SigninPage'
+import SignupPage from './pages/SingupPage'
 import Try from './pages/Try'
+import { ToastContainer } from 'react-toastify' // Import ToastContainer
+import 'react-toastify/dist/ReactToastify.css' // Import react-toastify styles
 
 function App() {
   return (
@@ -25,14 +27,15 @@ function App() {
               <Route path="/terms-condition" element={<TermsCondition />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/contact-us" element={<ContactUs />} />
-              <Route path="/signin" element={<SigninPage />}></Route>
-              <Route path="/signup" element={<SingupPage />}></Route>
-              <Route path="/teachersignup" element={<SingupPage />} />
-              <Route path="/try" element={<Try />} /> {/* Fixed here */}
+              <Route path="/signin" element={<SigninPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/teachersignup" element={<SignupPage />} />
+              <Route path="/try" element={<Try />} />
             </Routes>
           </main>
           <Footer />
         </div>
+        <ToastContainer /> {/* Add ToastContainer here */}
       </Router>
     </RecoilRoot>
   )

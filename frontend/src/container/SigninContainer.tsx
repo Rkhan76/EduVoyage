@@ -7,6 +7,7 @@ import {IsSingnedIn} from "../store/atoms/IsSignedIn"
 import { useNavigate } from 'react-router-dom'
 import SigninForm from '../components/SigninForm'
 import { useSigninForm } from '../hooks/useSigninForm'
+import {toast} from "react-toastify"
 
 const SigninContainer: React.FC = () => {
   const setIsSignedIn = useSetRecoilState(IsSingnedIn)
@@ -19,11 +20,19 @@ const SigninContainer: React.FC = () => {
     try {
       const result = await signinUser(formData)
       if (result) {
+        toast.success('Signup successful! Redirecting to sign-in...', {
+          position: 'top-right',
+          autoClose: (2000) // Use a string for position
+        }) 
         navigate('/')
         setIsSignedIn(true)
         console.log('Signin successful')
       }
     } catch (err) {
+      toast.error('Signup failed. Please try again.', {
+        position: 'top-right',
+        autoClose: 2000,
+      })
       console.error('Signin failed:', err)
     }
   }
