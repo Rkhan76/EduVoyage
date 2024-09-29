@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import HomePageImage1 from '../assets/homepageImage1.jpg'
 import Card from '../components/Card'
-import { handlefetchDomainNameOnly } from '../services/domain'
+import { handlefetchDomainNameOnly} from "../services/domainAndSubdomain"
+
+
 
 
 // "data": [

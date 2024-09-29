@@ -12,6 +12,7 @@ export const handleCreateOrUpdateDomain = async (
     subdomains,
   }: { domainName: string; subdomains: string[] } = req.body
 
+  console.log(domainName, subdomains)
   try {
     let domain = await prisma.domain.findUnique({
       where: {

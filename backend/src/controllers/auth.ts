@@ -21,6 +21,8 @@ export async function handleSignup(
   res: Response
 ) {
 
+  console.log(req.body)
+
   const validZodResult = signupInput.safeParse(req.body)
 
   if (!validZodResult.success) {
@@ -85,6 +87,8 @@ export async function handleSignup(
           message: `Something went wrong while registering as a ${role}.`,
         })
       }
+
+      console.log("command has reached to staus ", updatedUser)
 
       return res.status(STATUS_CODE.ACCEPTED).json({
         success: true,

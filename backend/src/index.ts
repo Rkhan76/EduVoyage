@@ -4,22 +4,23 @@ import userRouter from './routes/user'
 import courseRouter from './routes/course'
 import domainRouter from './routes/domain'
 
-
-
-
 const app = express()
 const port = 5050
 
-//middlewares
-app.use(cors())
+// CORS configuration
+const corsOptions = {
+  origin: 'http://localhost:5173', // Your React app URL
+  credentials: true, // Allow credentials (cookies, authorization headers)
+}
+
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-//routes
+// Routes
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/course', courseRouter)
 app.use('/api/v1/', domainRouter)
-
 
 app.get('/', (req, res) => {
   res.send(`<h1>Welcome to backend of EduVoyage</h1>`)

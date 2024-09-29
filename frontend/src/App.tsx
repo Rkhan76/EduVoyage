@@ -8,11 +8,12 @@ import TermsCondition from './pages/TermsConditon'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import ContactUs from './pages/ContactUs'
 import Footer from './components/Footer'
-import SigninPage from './pages/SigninPage'
-import SignupPage from './pages/SingupPage'
 import Try from './pages/Try'
 import { ToastContainer } from 'react-toastify' // Import ToastContainer
 import 'react-toastify/dist/ReactToastify.css' // Import react-toastify styles
+import AddDomainSubdomainPage from './pages/AddDomainSubdomainPage'
+import SignupPage from './pages/SingupPage'
+import SigninPage from './pages/SigninPage'
 
 function App() {
   return (
@@ -28,8 +29,12 @@ function App() {
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/contact-us" element={<ContactUs />} />
               <Route path="/signin" element={<SigninPage />} />
-              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/signup" element={<SignupPage/>} />
               <Route path="/teachersignup" element={<SignupPage />} />
+              <Route
+                path="/addDomainAndSubdomain"
+                element={<AddDomainSubdomainPage />}
+              />
               <Route path="/try" element={<Try />} />
             </Routes>
           </main>
