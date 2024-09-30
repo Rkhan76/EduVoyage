@@ -6,11 +6,13 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "tsc -w & nodemon dist/index.js"
+    "dev": "tsc -w & nodemon dist/index.js",
+    "seed": "ts-node prisma/seed.ts",
+    "poststart": "npm run seed"         
   },
   "dependencies": {
     "@prisma/client": "^5.16.2",
-    "@rkhan76/common": "^1.0.5",
+    "@rkhan76/common": "^1.0.8",
     "bcrypt": "^5.1.1",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
@@ -25,7 +27,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "^20.14.10",
+    "@types/node": "^20.16.10",
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"

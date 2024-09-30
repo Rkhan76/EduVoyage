@@ -10,18 +10,21 @@ export const signupInput = z.object({
   fullname: z.string(),
   username: z.string(),
   password: z.string(),
-  role: z.nativeEnum(UserRole).optional(), // Use nativeEnum for TypeScript enums
+  role: z.nativeEnum(UserRole).optional(),
 })
 
 export type SignupParams = z.infer<typeof signupInput>
 
 export const signinInput = z.object({
-   username: z.string(),
-   password: z.string()
+  username: z.string(),
+  password: z.string(),
 })
 
-export type SinginParams = z.infer<typeof signinInput>
+export type SigninParams = z.infer<typeof signinInput>
 
-// export const  = z.object({
+export const domainAndSubdomainInput = z.object({
+  domainName: z.string().min(1, { message: 'Domain name cannot be empty' }),
+  subdomains: z.array(z.string()).default([]),
+})
 
-// })
+export type DomainAndSubdomainParams = z.infer<typeof domainAndSubdomainInput>

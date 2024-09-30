@@ -31,4 +31,15 @@ export declare const signinInput: z.ZodObject<{
     username: string;
     password: string;
 }>;
-export type SinginParams = z.infer<typeof signinInput>;
+export type SigninParams = z.infer<typeof signinInput>;
+export declare const domainAndSubdomainInput: z.ZodObject<{
+    domainName: z.ZodString;
+    subdomains: z.ZodDefault<z.ZodArray<z.ZodString, "many">>;
+}, "strip", z.ZodTypeAny, {
+    domainName: string;
+    subdomains: string[];
+}, {
+    domainName: string;
+    subdomains?: string[] | undefined;
+}>;
+export type DomainAndSubdomainParams = z.infer<typeof domainAndSubdomainInput>;

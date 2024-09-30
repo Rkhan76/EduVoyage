@@ -1,91 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import HomePageImage1 from '../assets/homepageImage1.jpg'
-import Card from '../components/Card'
-import { handlefetchDomainNameOnly} from "../services/domainAndSubdomain"
+import FetchDomainPage from "./FectchDomains"
 
-
-
-
-// "data": [
-//         {
-//             "id": "a8a29ecd-ac50-4686-aeda-b2dbcaefd3b2",
-//             "name": "Data Science",
-//             "courses": []
-//         },
-//         {
-//             "id": "1110c153-9ee5-4e81-83ba-27beb8e9522e",
-//             "name": "Mobile Development",
-//             "courses": []
-//         },
-//         {
-//             "id": "34041bff-1e75-4321-82ab-293b03a6bf82",
-//             "name": "Web Development",
-//             "courses": [
-//                 "97328206-ca92-4be0-a197-f0115e0a0db0",
-//                 "692b6334-1402-4cbe-8b6c-0d7b7810ca61"
-//             ]
-//         }
-//     ]
-const domain = [
-  'Development',
-  'IT Certifications',
-  'Leadership',
-  'Data Science',
-  'Communication',
-  'Business Analytics & Intelligence',
-]
-
-const subdomains = [
-  'Web Development',
-  'iOS Development',
-  'Android Development',
-  'Frontend Development',
-  'Backend Development',
-  'Full Stack Development',
-  'Game Development',
-  'Mobile Development',
-  'DevOps',
-]
-
-const cardData = [
-  {
-    courseCoverImg: 'https://example.com/images/course1.jpg',
-    title: 'Introduction to Web Development',
-    teacher: 'Jane Doe',
-    price: '$199',
-  },
-  // More card data here...
-]
 
 const Home: React.FC = () => {
-  const [activeTitle, setActiveTitle] = useState<string | null>(null)
-  const [activeSubdomain, setActiveSubdomain] = useState<string | null>(null)
-
-  // Function to handle domain click
-  const handleDomainClick = (title: string) => {
-    setActiveTitle(title)
-  }
-
-  // Function to handle subdomain click
-  const handleSubdomainClick = (subdomain: string) => {
-    setActiveSubdomain(subdomain)
-    // Fetch data or perform any action you want on click
-  }
-
-   useEffect(() => {
-     const fetchData = async () => {
-       const domains = await handlefetchDomainNameOnly()
-
-       // Optionally handle the fetched domains data here
-       console.log(domains)
-
-       setActiveSubdomain('Web Development')
-       setActiveTitle('Development')
-     }
-
-     fetchData()
-   }, [])
-
   return (
     <div className="p-8">
       <img
@@ -101,9 +19,10 @@ const Home: React.FC = () => {
           From critical skills to technical topics, EduVoyage supports your
           professional development.
         </h6>
+        <FetchDomainPage/>
 
         {/* Domain Section */}
-        <div className="mb-6 flex justify-evenly">
+        {/* <div className="mb-6 flex justify-evenly">
           {domain.map((title, index) => (
             <div
               key={index}
@@ -119,10 +38,11 @@ const Home: React.FC = () => {
               </h3>
             </div>
           ))}
-        </div>
+        </div> */}
+        
 
         {/* Subdomain Section */}
-        <ul className="flex flex-wrap justify-evenly mb-6">
+        {/* <ul className="flex flex-wrap justify-evenly mb-6">
           {subdomains.map((subdomain, index) => (
             <li key={index}>
               <h3
@@ -135,10 +55,10 @@ const Home: React.FC = () => {
               </h3>
             </li>
           ))}
-        </ul>
+        </ul> */}
 
         {/* Card Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {cardData.map((card, index) => (
             <Card
               key={index}
@@ -148,7 +68,7 @@ const Home: React.FC = () => {
               price={card.price}
             />
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   )

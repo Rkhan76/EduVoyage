@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { Request, Response } from 'express'
+import {domainAndSubdomainInput, DomainAndSubdomainParams} from '@rkhan76/common'
 
 const prisma = new PrismaClient()
 
@@ -10,9 +11,17 @@ export const handleCreateOrUpdateDomain = async (
   const {
     domainName,
     subdomains,
-  }: { domainName: string; subdomains: string[] } = req.body
+  }: DomainAndSubdomainParams = req.body
 
-  console.log(domainName, subdomains)
+  const validZodResult = domainAndSubdomainInput.safeParse(req.body)
+
+   if (!validZodResult.success) {
+     const validationErrors = validZodResult.error.errors.map((error) => ({
+       path: error.path,
+       message: error.message,
+     }))
+   }
+  
   try {
     let domain = await prisma.domain.findUnique({
       where: {

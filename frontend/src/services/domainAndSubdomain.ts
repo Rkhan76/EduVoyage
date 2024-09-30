@@ -31,22 +31,17 @@ export const handleAddDomainAndSubdomain = async (formData: any) => {
   }
 }
 
-export const handlefetchDomainNameOnly = async () => {
+export const handleAllfetchDomainNameOnly = async () => {
   try {
-    const token = Cookies.get('token')
+    const domains = await axios.get(`${BASE_URL}/domain`)
 
-    const domains = await axios.get(`${BASE_URL}/domain`, {
-      headers: {
-        Authorization: `${token}`,
-      },
-      withCredentials: true,
-    })
-
-    if (!domains) {
+    if (domains.data.success === false) {
+      console.log("no domain fetch")
       return null
     }
 
-    return domains.data
+
+    return domains.data.data
   } catch (error) {
     console.error('Error fetching API:', error)
   }
