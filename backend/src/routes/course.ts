@@ -4,8 +4,14 @@ import {
   handleViewCourse,
   handleUpdateCourse,
   handleDeleteCourse,
+  handleViewCourseByDomainAndSubdomains,
 } from '../controllers/course'
-import { handleAddLesson, handleViewLesson, handleUpdateLesson, handleDeleteLesson } from '../controllers/lesson'
+import {
+  handleAddLesson,
+  handleViewLesson,
+  handleUpdateLesson,
+  handleDeleteLesson,
+} from '../controllers/lesson'
 import {handleAuthentication} from "../middlewares/auth"
 import {handleCheckUserRole} from '../middlewares/checkUserRole'
 
@@ -20,6 +26,7 @@ router.delete('/lesson/delete/:id',handleAuthentication, handleCheckUserRole,  h
 
 
 //course routes
+router.get('/view/bysubdomain', handleViewCourseByDomainAndSubdomains)
 router.get('/view/:id', handleAuthentication, handleViewCourse)
 router.post('/add',handleAuthentication,handleCheckUserRole, handleCreateCourse)
 router.put('/update/:id', handleAuthentication, handleCheckUserRole, handleUpdateCourse)

@@ -41,8 +41,22 @@ export const handleAllfetchDomainNameOnly = async () => {
     }
 
 
+    console.log("here is domains.data.data",domains.data.data)
     return domains.data.data
   } catch (error) {
     console.error('Error fetching API:', error)
+  }
+}
+
+export const handleFetchSubdomainByDomain = async (domainId: string) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/subdomainsbydomain?domainId=${domainId}`
+    )
+    
+      return response.data.success === true ? response.data.subdomains : null
+  } catch (error) {
+    console.error('Error fetching subdomains:', error) // Log the error for debugging
+    throw error // Throw the error so it can be handled by the calling function
   }
 }

@@ -13,11 +13,17 @@ interface CourseBody {
   userDetails: DecodedToken // Ensure this is defined correctly
 }
 
+interface CourseQuery {
+  selectedDomainId?: string
+  selectedSubdomainId?: string
+}
+
 export async function handleCreateCourse(
   req: Request<any, any, CourseBody>,
   res: Response
 ) {
   const { title, description, price, domain, subDomains } = req.body
+  console.log(req.body.userDetails, " user details is here")
   const { userId }: { userId: string } = req.body.userDetails
 
   // Ensure subDomains is an array
@@ -253,3 +259,70 @@ export async function handleDeleteCourse(req: Request, res: Response) {
     })
   }
 }
+
+export async function handleViewCourseByDomainAndSubdomains(
+  req: Request<any, any, any, CourseQuery>, // Use CourseQuery for query parameters
+  res: Response
+) {
+  const { selectedDomainId, selectedSubdomainId } = req.query
+
+  // Check if the required query parameters are provided
+  if (!selectedDomainId || !selectedSubdomainId) {
+    return res.status(400).json({
+      success: false,
+      message: 'Domain ID and subdomain ID are required',
+    })
+  }
+
+  try {
+    // Step 1: Fetch the domain and subdomain names by their IDs
+    const domain = await prisma.domain.findUnique({
+      where: { id: selectedDomainId },
+      select: { name: true }, // Only select the domain name
+    })
+
+    const subdomain = await prisma.subdomain.findUnique({
+      where: { id: selectedSubdomainId },
+      select: { name: true }, // Only select the subdomain name
+    })
+
+    // If domain or subdomain does not exist, return error
+    if (!domain || !subdomain) {
+      return res.status(404).json({
+        success: false,
+        message: 'Domain or Subdomain not found',
+      })
+    }
+
+    // Step 2: Fetch the courses based on the domain and subdomain names
+    const courses = await prisma.course.findMany({
+      where: {
+        domainName: domain.name, // Use the fetched domain name
+        subdomainName: {
+          has: subdomain.name, // Use the fetched subdomain name
+        },
+      },
+      take: 8, // Limit the number of results
+      include: {
+        creator: {
+          select: {
+            fullname: true, // Include the creator's fullname
+          },
+        },
+      },
+    })
+
+    console.log(courses)
+
+    return res.status(200).json({ success: true, courses: courses })
+  } catch (error) {
+    console.error(error) // Log the error for debugging
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong with the server',
+    })
+  }
+}
+
+
+

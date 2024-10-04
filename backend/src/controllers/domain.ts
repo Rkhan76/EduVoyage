@@ -213,3 +213,41 @@ export async function handleGetSubdomainOnly(req: Request, res: Response) {
     })
   }
 }
+
+export async function handleGetSubdomainsByDomain(req: Request, res: Response) {
+  const { domainId } = req.query
+
+  if (!domainId) {
+    return res.status(400).json({
+      success: false,
+      message: 'domainId query parameter is required',
+    })
+  }
+
+  try {
+    // Fetch subdomains associated with the given domainId
+    const subdomains = await prisma.subdomain.findMany({
+      where: {
+        domainId: domainId as string, // Type assertion for domainId
+      },
+    })
+
+    if (!subdomains.length) {
+      return res.status(404).json({
+        success: false,
+        message: `No subdomains found for domainId: ${domainId}`,
+      })
+    }
+
+    return res.status(200).json({
+      success: true,
+      subdomains,
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong while fetching subdomains',
+    })
+  }
+}

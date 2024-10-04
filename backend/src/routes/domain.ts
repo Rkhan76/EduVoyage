@@ -3,7 +3,8 @@ import {
   handleCreateOrUpdateDomain,
   handleGetDomainsWithSubdomains,
   handleGetDomainOnly,
-  handleGetSubdomainOnly
+  handleGetSubdomainOnly,
+  handleGetSubdomainsByDomain,
 } from '../controllers/domain'
 import { handleAuthentication } from '../middlewares/auth'
 
@@ -11,9 +12,10 @@ const router = express.Router()
 
 // Create and update the domain( add subdomain if domain already exits )
 router.post("/domain", handleAuthentication, handleCreateOrUpdateDomain)
-router.get('/alldomain', handleGetDomainsWithSubdomains)
+router.get('/alldomains', handleGetDomainsWithSubdomains)
 router.get("/domain", handleGetDomainOnly)
-router.get("/subdomain", handleAuthentication, handleGetSubdomainOnly)
+router.get("/subdomainsbydomain", handleGetSubdomainsByDomain)
+router.get("/allSubdomains", handleGetSubdomainOnly)
 
 export default router
 

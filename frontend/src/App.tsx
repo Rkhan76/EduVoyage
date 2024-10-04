@@ -14,6 +14,7 @@ import AddDomainSubdomainPage from './pages/AddDomainSubdomainPage'
 import SignupPage from './pages/SingupPage'
 import SigninPage from './pages/SigninPage'
 import FetchDomainPage from './pages/FectchDomains'
+import AllCoursesPage from './container/AllCoursesPage'
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
                 path="/addDomainAndSubdomain"
                 element={<AddDomainSubdomainPage />}
               />
+              <Route path="/courses/:domainName/:subdomainName" element={<AllCoursesPage/>} />
               <Route path="/try" element={<FetchDomainPage/>} />
             </Routes>
           </main>

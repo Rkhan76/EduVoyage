@@ -30,10 +30,11 @@ export async function handleComparePassword(
 export async function handleGenerateToken({
   userId,
   username,
+  fullname,
   roles
 }: DecodedToken): Promise<string> {
   try {
-    const token = jwt.sign({ userId, username, roles }, process.env.SECRET_KEY!, {
+    const token = jwt.sign({ userId, username,fullname, roles }, process.env.SECRET_KEY!, {
       expiresIn: '7d'
     });
     return token;

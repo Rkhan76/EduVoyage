@@ -4,7 +4,7 @@ import STATUS_CODE from '../constant/httpStatusCode'
 import {
   signinInput,
   SignupParams,
-  SinginParams,
+  SigninParams,
   signupInput,
 } from '@rkhan76/common'
 
@@ -134,7 +134,7 @@ export async function handleSignup(
 }
 
 export async function handleSignin(
-  req: Request<any, any, SinginParams>,
+  req: Request<any, any, SigninParams>,
   res: Response
 ) {
   //zod validation
@@ -175,7 +175,8 @@ export async function handleSignin(
 
     const token = await handleGenerateToken({
       userId: user.id,
-      username,
+      username: user.username,
+      fullname: user.fullname,
       roles: user.roles,
     })
 
