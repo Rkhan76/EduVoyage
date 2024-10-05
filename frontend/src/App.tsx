@@ -14,7 +14,8 @@ import AddDomainSubdomainPage from './pages/AddDomainSubdomainPage'
 import SignupPage from './pages/SingupPage'
 import SigninPage from './pages/SigninPage'
 import FetchDomainPage from './pages/FectchDomains'
-import AllCoursesPage from './container/AllCoursesPage'
+import AllCoursesPage from './pages/AllCoursePage'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
@@ -30,14 +31,18 @@ function App() {
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/contact-us" element={<ContactUs />} />
               <Route path="/signin" element={<SigninPage />} />
-              <Route path="/signup" element={<SignupPage/>} />
+              <Route path="/signup" element={<SignupPage />} />
               <Route path="/teachersignup" element={<SignupPage />} />
               <Route
                 path="/addDomainAndSubdomain"
                 element={<AddDomainSubdomainPage />}
               />
-              <Route path="/courses/:domainName/:subdomainName" element={<AllCoursesPage/>} />
-              <Route path="/try" element={<FetchDomainPage/>} />
+              <Route
+                path="/courses/:domainName/:subdomainName?"
+                element={<AllCoursesPage />}
+              />
+              <Route path="/try" element={<FetchDomainPage />} />
+              <Route path='not-found' element={<NotFound/>} />
             </Routes>
           </main>
           <Footer />

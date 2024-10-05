@@ -128,8 +128,6 @@ export async function handleCreateCourse(
 export async function handleViewCourse(req: Request, res: Response) {
   const courseId: string = req.params.id
 
-  console.log('courseId : ', courseId)
-
   if (!courseId) {
     return res.status(400).json({
       success: false,
@@ -300,6 +298,38 @@ export async function handleViewCourseByDomainAndSubdomains(
     })
   }
 }
+
+export async function handleViewCourseByDomainOnly(
+  req: Request,
+  res: Response
+) {
+  const domainName = req.query.domainName as string
+  
+  console.log(domainName, 'domain name is here')
+
+  try {
+    const courses = await prisma.course.findMany({
+      where: {
+        domainName: String(domainName),
+      },
+      take: 15,
+    })
+
+    if (courses.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'No courses found for this domain.' })
+    }
+
+    return res.status(200).json({ success: true, data: courses })
+  } catch (error) {
+    console.error('Error fetching courses:', error)
+    return res
+      .status(500)
+      .json({ success: false, message: 'Internal Server Error' })
+  }
+}
+
 
 
 

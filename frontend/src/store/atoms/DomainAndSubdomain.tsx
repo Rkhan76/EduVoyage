@@ -1,4 +1,5 @@
 import { atom } from 'recoil'
+import { Domain } from '../../types/types'
 
 export const selectedDomainState = atom<string | null>({
   key: 'selectedDomainState',
@@ -18,4 +19,9 @@ export const selectedDomainNameState = atom<string | null>({
 export const selectedSubdomainNameState = atom<string | null>({
   key: 'selectedSubdomainNameState',
   default: null,
+})
+
+export const domainState = atom<Domain[]>({
+  key: 'domainState',
+  default: [],
 })
