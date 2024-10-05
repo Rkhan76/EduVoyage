@@ -14,8 +14,8 @@ interface CourseBody {
 }
 
 interface CourseQuery {
-  selectedDomainId?: string
-  selectedSubdomainId?: string
+  selectedDomainName?: string
+  selectedSubdomainName?: string
 }
 
 export async function handleCreateCourse(
@@ -261,68 +261,46 @@ export async function handleDeleteCourse(req: Request, res: Response) {
 }
 
 export async function handleViewCourseByDomainAndSubdomains(
-  req: Request<any, any, any, CourseQuery>, // Use CourseQuery for query parameters
+  req: Request<any, any, any, CourseQuery>,
   res: Response
 ) {
-  const { selectedDomainId, selectedSubdomainId } = req.query
+  const { selectedDomainName, selectedSubdomainName } = req.query
 
-  // Check if the required query parameters are provided
-  if (!selectedDomainId || !selectedSubdomainId) {
+  if (!selectedDomainName || !selectedSubdomainName) {
     return res.status(400).json({
       success: false,
-      message: 'Domain ID and subdomain ID are required',
+      message: 'Domain name and subdomain name are required',
     })
   }
 
   try {
-    // Step 1: Fetch the domain and subdomain names by their IDs
-    const domain = await prisma.domain.findUnique({
-      where: { id: selectedDomainId },
-      select: { name: true }, // Only select the domain name
-    })
-
-    const subdomain = await prisma.subdomain.findUnique({
-      where: { id: selectedSubdomainId },
-      select: { name: true }, // Only select the subdomain name
-    })
-
-    // If domain or subdomain does not exist, return error
-    if (!domain || !subdomain) {
-      return res.status(404).json({
-        success: false,
-        message: 'Domain or Subdomain not found',
-      })
-    }
-
-    // Step 2: Fetch the courses based on the domain and subdomain names
     const courses = await prisma.course.findMany({
       where: {
-        domainName: domain.name, // Use the fetched domain name
+        domainName: selectedDomainName,
         subdomainName: {
-          has: subdomain.name, // Use the fetched subdomain name
+          has: selectedSubdomainName,
         },
       },
-      take: 8, // Limit the number of results
+      take: 8,
       include: {
         creator: {
           select: {
-            fullname: true, // Include the creator's fullname
+            fullname: true,
           },
         },
       },
     })
 
-    console.log(courses)
-
-    return res.status(200).json({ success: true, courses: courses })
+    return res.status(200).json({ success: true, courses })
   } catch (error) {
-    console.error(error) // Log the error for debugging
+    console.error(error)
     return res.status(500).json({
       success: false,
       message: 'Something went wrong with the server',
     })
   }
 }
+
 
 
 

@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { handleFetchCourseByDomainAndSubdomain } from '../services/Courses'
 import { useRecoilValue } from 'recoil'
 import {
+  selectedDomainNameState,
   selectedDomainState,
+  selectedSubdomainNameState,
   selectedSubdomainState,
 } from '../store/atoms/DomainAndSubdomain'
 
@@ -19,8 +21,10 @@ interface Course {
 }
 
 export const useFetchCourseBySubdomain = () => {
-  const selectedDomainId = useRecoilValue(selectedDomainState)
-  const selectedSubdomainId = useRecoilValue(selectedSubdomainState)
+  // const selectedDomainId = useRecoilValue(selectedDomainState)
+  // const selectedSubdomainId = useRecoilValue(selectedSubdomainState)
+  const selectedDomainName = useRecoilValue(selectedDomainNameState)
+  const selectedSubdomainName = useRecoilValue(selectedSubdomainNameState)
   const [courses, setCourses] = useState<Course[]>([])
   const [loading, setLoading] = useState<boolean | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -30,8 +34,8 @@ export const useFetchCourseBySubdomain = () => {
       setLoading(true)
       try {
         const data = await handleFetchCourseByDomainAndSubdomain(
-          selectedDomainId,
-          selectedSubdomainId
+          selectedDomainName,
+          selectedSubdomainName
         )
 
         if (data) {
@@ -45,13 +49,13 @@ export const useFetchCourseBySubdomain = () => {
       }
     }
 
-    if (selectedDomainId && selectedSubdomainId) {
+    if (selectedDomainName && selectedSubdomainName) {
       getCourseByDomainAndSubdomain()
     }
-  }, [selectedDomainId, selectedSubdomainId])
+  }, [selectedDomainName, selectedSubdomainName])
 
-  console.log('selectedDomainId', selectedSubdomainId)
-  console.log('selectedSubdomainId', selectedSubdomainId)
+  console.log('selectedSubdomainName : ', selectedSubdomainName)
+  console.log('selectedDomainName : ', selectedDomainName)
 
   return { courses, loading, error }
 }

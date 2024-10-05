@@ -3,12 +3,12 @@ const BASE_URL = import.meta.env.VITE_API_URL
 
 
 export const handleFetchCourseByDomainAndSubdomain = async (
-  selectedDomainId: string | null,
-  selectedSubdomainId: string | null,
+  selectedDomainName: string | null,
+  selectedSubdomainName: string | null
 ) => {
   try {
     const response = await axios.get(`${BASE_URL}/course/view/bysubdomain`, {
-      params: { selectedDomainId, selectedSubdomainId },
+      params: { selectedDomainName, selectedSubdomainName },
     })
 
     console.log(response.data.courses, 'course response is here')

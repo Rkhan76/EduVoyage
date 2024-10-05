@@ -14,3 +14,8 @@ export const selectedDomainNameState = atom<string | null>({
   key: 'selectedDomainNameState',
   default: null
 })
+
+export const selectedSubdomainNameState = atom<string | null>({
+  key: 'selectedSubdomainNameState',
+  default: null,
+})

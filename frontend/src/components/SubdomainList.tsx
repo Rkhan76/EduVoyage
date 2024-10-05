@@ -10,7 +10,7 @@ interface SubDomain {
 
 interface SubdomainListProps {
   subdomains: SubDomain[]
-  onSubdomainClick: (subdomainId: string)=> void
+  onSubdomainClick: (subdomainId: string, subdomainName: string)=> void
 }
 
 const SubdomainList: React.FC<SubdomainListProps> = React.memo(
@@ -21,7 +21,7 @@ const SubdomainList: React.FC<SubdomainListProps> = React.memo(
       {subdomains.map((subdomain) => (
         <div
           key={subdomain.id}
-          onClick={()=> onSubdomainClick(subdomain.id)}
+          onClick={()=> onSubdomainClick(subdomain.id, subdomain.name)}
           className="p-3 bg-blue-50 border border-blue-200 rounded-md shadow-sm text-left"
         >
           <h4 className="text-md font-medium text-blue-700">
