@@ -1,8 +1,7 @@
 // src/store/atoms/Cart.ts
 import { atom } from 'recoil'
-import { Course} from "../../types/types"
 
-export const cartState = atom<Course[]>({
+export const cartState = atom<string[]>({
   key: 'cartState', 
   default: [], 
 })

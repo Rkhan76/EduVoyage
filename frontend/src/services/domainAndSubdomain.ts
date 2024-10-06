@@ -6,9 +6,7 @@ const BASE_URL = import.meta.env.VITE_API_URL
 export const handleAddDomainAndSubdomain = async (formData: any) => {
   try {
     const token = Cookies.get('token')
-    console.log(token)
-    console.log(`${BASE_URL}/domain`)
-
+    
     const addDomainSubdomain = await axios.post(
       `${BASE_URL}/domain`,
       formData, // Send formData directly

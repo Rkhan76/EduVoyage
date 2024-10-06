@@ -3,15 +3,18 @@
 import React from 'react'
 import { signinUser } from '../services/authService'
 import { useSetRecoilState } from 'recoil'
-import {IsSingnedIn} from "../store/atoms/IsSignedIn"
+import { IsSingnedIn } from '../store/atoms/IsSignedIn'
+import { cartState } from '../store/atoms/Cart'
 import { useNavigate } from 'react-router-dom'
 import SigninForm from '../components/SigninForm'
 import { useSigninForm } from '../hooks/useSigninForm'
-import {toast} from "react-toastify"
+import { handleFetchCart } from '../services/cart'
+import { toast } from 'react-toastify'
 
 const SigninContainer: React.FC = () => {
   const setIsSignedIn = useSetRecoilState(IsSingnedIn)
-  const { formData, handleInputChange } = useSigninForm() // Using the hook
+  const setCart = useSetRecoilState(cartState)
+  const { formData, handleInputChange } = useSigninForm()
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,16 +23,20 @@ const SigninContainer: React.FC = () => {
     try {
       const result = await signinUser(formData)
       if (result) {
-        toast.success('Signup successful! Redirecting to sign-in...', {
+        toast.success('Signin successful! Redirecting...', {
           position: 'top-right',
-          autoClose: (2000) // Use a string for position
-        }) 
-        navigate('/')
+          autoClose: 2000,
+        })
+
+        // Fetch cart after successful signin
+        const cartData = await handleFetchCart()
+        setCart(cartData)
+
         setIsSignedIn(true)
-        console.log('Signin successful')
+        navigate('/')
       }
     } catch (err) {
-      toast.error('Signup failed. Please try again.', {
+      toast.error('Signin failed. Please try again.', {
         position: 'top-right',
         autoClose: 2000,
       })
@@ -40,7 +47,7 @@ const SigninContainer: React.FC = () => {
   return (
     <SigninForm
       formData={formData}
-      onChange={handleInputChange} // Use the form handler from the hook
+      onChange={handleInputChange}
       onSubmit={handleSubmit}
     />
   )

@@ -36,7 +36,6 @@ export const checkDomainExists = async ()=> {
 }
 
 export const handleFetchAllCourse = async (domainName: string) => {
-  console.log(domainName, "domain name is here")
   try {
     const response = await axios.get(`${BASE_URL}/course/view/bydomain`, {
       params: { domainName },

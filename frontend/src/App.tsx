@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { RecoilRoot } from 'recoil'
+import { RecoilRoot, useSetRecoilState } from 'recoil'
+import { cartState } from './store/atoms/Cart'
+import { fetchCartOnAppLoad } from './utils/fetchCartOnAppLoad' // Import the function
 import Navbar from './pages/Navbar'
 import Home from './pages/Home'
 import Pricing from './pages/Pricing'
@@ -8,8 +10,8 @@ import TermsCondition from './pages/TermsConditon'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import ContactUs from './pages/ContactUs'
 import Footer from './components/Footer'
-import { ToastContainer } from 'react-toastify' // Import ToastContainer
-import 'react-toastify/dist/ReactToastify.css' // Import react-toastify styles
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import AddDomainSubdomainPage from './pages/AddDomainSubdomainPage'
 import SignupPage from './pages/SingupPage'
 import SigninPage from './pages/SigninPage'
@@ -19,6 +21,13 @@ import NotFound from './pages/NotFound'
 import CourseDetailsPage from './pages/CourseDetailsPage'
 
 function App() {
+  const setCart = useSetRecoilState(cartState)
+
+  // Call the fetchCartOnAppLoad function in useEffect
+  useEffect(() => {
+    fetchCartOnAppLoad(setCart)
+  }, [setCart])
+
   return (
     <RecoilRoot>
       <Router>
@@ -49,7 +58,7 @@ function App() {
           </main>
           <Footer />
         </div>
-        <ToastContainer /> {/* Add ToastContainer here */}
+        <ToastContainer />
       </Router>
     </RecoilRoot>
   )
