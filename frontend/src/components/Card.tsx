@@ -1,4 +1,5 @@
 import React from 'react'
+import cardImg from "../assets/teacherImage.jpg"
 
 interface CardProps {
   courseCoverImg: string
@@ -13,18 +14,16 @@ const Card: React.FC<CardProps> = ({
   title,
   creator,
   price,
-  onClick, // Destructure onClick from props
+  onClick, 
 }) => {
   return (
     <div
       className="bg-white border rounded-lg shadow-lg overflow-hidden cursor-pointer"
       onClick={onClick}
     >
-      {' '}
-      {/* Add onClick to the container */}
       <img
-        src={courseCoverImg || 'placeholder-image-url'} // Replace with actual placeholder image URL
-        alt={title} // Use the title for accessibility
+        src={courseCoverImg || cardImg}
+        alt={title}
         className="w-full h-40 object-cover"
       />
       <div className="p-4">

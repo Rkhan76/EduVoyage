@@ -4,14 +4,15 @@ import LongCourseCard from './LongCourseCard'
 
 const ShowAllCourses: React.FC<CoursesListProps> = ({ coursesList }) => {
   return (
-    <div className="grid grid-cols-1 gap-4">
-      {' '}
-      {/* Only one card per row */}
-      {coursesList.map((course: Course) => (
-        <div key={course.id}>
-          <LongCourseCard course={course} />
-        </div>
-      ))}
+    <div>
+    <div></div>
+      <div className="grid grid-cols-1 gap-4">
+        {coursesList.map((course: Course) => (
+          <div key={course.id}>
+            <LongCourseCard course={course} />
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

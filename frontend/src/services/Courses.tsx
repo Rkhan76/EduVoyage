@@ -53,3 +53,27 @@ export const handleFetchAllCourse = async (domainName: string) => {
     return false
   }
 }
+
+export const handleFetchCourseDetails = async (selectedCourseID: string) => {
+  try {
+    const courseDetails = await axios.get(
+      `${BASE_URL}/course/view/${selectedCourseID}`
+    ) 
+
+
+    if (courseDetails.data.success === true) {
+      console.log(
+        'course detail data has reached service folder ',
+        courseDetails.data.data
+      )
+      return courseDetails.data.courseDetail
+
+    } else {
+      return null
+    }
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+

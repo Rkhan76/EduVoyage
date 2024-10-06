@@ -29,7 +29,7 @@ router.delete('/lesson/delete/:id',handleAuthentication, handleCheckUserRole,  h
 //course routes
 router.get('/view/bysubdomain', handleViewCourseByDomainAndSubdomains)
 router.get('/view/bydomain', handleViewCourseByDomainOnly)
-router.get('/view/:id', handleAuthentication, handleViewCourse)
+router.get('/view/:id', handleViewCourse)
 router.post('/add',handleAuthentication,handleCheckUserRole, handleCreateCourse)
 router.put('/update/:id', handleAuthentication, handleCheckUserRole, handleUpdateCourse)
 router.delete("/delete/:id", handleAuthentication, handleCheckUserRole, handleDeleteCourse)

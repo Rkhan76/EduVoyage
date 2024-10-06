@@ -3,6 +3,7 @@ import cors from 'cors'
 import userRouter from './routes/user'
 import courseRouter from './routes/course'
 import domainRouter from './routes/domain'
+import cartRouter from './routes/cart'
 
 const app = express()
 const port = 5050
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }))
 // Routes
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/course', courseRouter)
+app.use('/api/v1/cart', cartRouter)
 app.use('/api/v1/', domainRouter)
 
 app.get('/', (req, res) => {

@@ -9,7 +9,7 @@ import {DecodedToken} from "../types/type"
 export async function handleAuthentication(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization
 
-  console.log(authHeader)
+  console.log('command has reacher handleAuthentication')
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(STATUS_CODES.UNAUTHORIZED).json({
