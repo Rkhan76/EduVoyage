@@ -2,6 +2,11 @@ import { NavLink } from 'react-router-dom'
 import Button from '../components/Button'
 import { useRecoilValue } from 'recoil'
 import { IsSingnedIn } from '../store/atoms/IsSignedIn'
+<<<<<<< Updated upstream
+=======
+import ShoppingCartLogo from '../components/subcomponents/ShoppingCartLogo'
+import LogoutButton from '../components/subcomponents/LogoutButton'
+>>>>>>> Stashed changes
 
 const Navbar = () => {
   const isSignedIn = useRecoilValue(IsSingnedIn)
@@ -97,7 +102,11 @@ const Navbar = () => {
             </NavLink>
           </li>
           {isSignedIn ? (
+<<<<<<< Updated upstream
             <h1 className='text-white'>logout</h1>
+=======
+            <LogoutButton/>
+>>>>>>> Stashed changes
           ) : (
             <>
               <li>
