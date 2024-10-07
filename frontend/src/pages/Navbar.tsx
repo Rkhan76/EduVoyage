@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import Button from '../components/Button'
 import { useRecoilValue } from 'recoil'
 import { IsSingnedIn } from '../store/atoms/IsSignedIn'
+import ShoppingCartLogo from '../components/subcomponents/ShoppingCartLogo'
 
 const Navbar = () => {
   const isSignedIn = useRecoilValue(IsSingnedIn)
@@ -96,8 +97,15 @@ const Navbar = () => {
               Teach on EduVoyage
             </NavLink>
           </li>
+          <li>
+            <li>
+              <NavLink to="/cart">
+                <ShoppingCartLogo />
+              </NavLink>
+            </li>
+          </li>
           {isSignedIn ? (
-            <h1 className='text-white'>logout</h1>
+            <h1 className="text-white">logout</h1>
           ) : (
             <>
               <li>
