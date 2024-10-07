@@ -6,8 +6,6 @@ import { IsSingnedIn } from '../store/atoms/IsSignedIn'
 const Navbar = () => {
   const isSignedIn = useRecoilValue(IsSingnedIn)
 
-  console.log("is signedin : ",isSignedIn)
-
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between items-center">

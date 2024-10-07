@@ -22,7 +22,6 @@ export const useFetchDomains = () => {
         const data = await handleAllfetchDomainNameOnly()
         if(data){
             setDomains(data)
-            console.log("here is the domains useState ", domains)
         }
         
       } catch (err) {
@@ -36,8 +35,5 @@ export const useFetchDomains = () => {
   }, [])
 
   
-  // setSelectedDomain(domains[0].id)
-  console.log("domains is here after usefetchdomain : ",domains)
-
   return { domains, loading, error }
 }

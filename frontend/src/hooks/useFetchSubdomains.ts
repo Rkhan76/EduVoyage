@@ -11,20 +11,19 @@ interface SubDomain {
 }
 
 export const useFetchSubdomains = () => {
-  const selectedDomainId = useRecoilValue(selectedDomainState) // Read the selected domain ID
+  const selectedDomainId = useRecoilValue(selectedDomainState)
   const [subdomains, setSubdomains] = useState<SubDomain[]>([])
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const getSubdomains = async () => {
-      if (!selectedDomainId) return // Don't fetch if no domain ID is selected
-      setLoading(true) // Set loading to true when fetching
+      if (!selectedDomainId) return
+      setLoading(true)
       try {
         const data = await handleFetchSubdomainByDomain(selectedDomainId)
         if (data) {
           setSubdomains(data)
-          console.log('subdomain data has reached to hook')
         }
       } catch (error) {
         setError('Failed to load subdomains')
@@ -33,8 +32,8 @@ export const useFetchSubdomains = () => {
       }
     }
 
-    getSubdomains() // Fetch subdomains when selected domain ID changes
-  }, [selectedDomainId]) // Depend on selectedDomainId
+    getSubdomains()
+  }, [selectedDomainId])
 
   return { subdomains, loading, error }
 }

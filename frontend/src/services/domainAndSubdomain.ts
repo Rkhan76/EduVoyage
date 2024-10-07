@@ -6,10 +6,10 @@ const BASE_URL = import.meta.env.VITE_API_URL
 export const handleAddDomainAndSubdomain = async (formData: any) => {
   try {
     const token = Cookies.get('token')
-    
+
     const addDomainSubdomain = await axios.post(
       `${BASE_URL}/domain`,
-      formData, // Send formData directly
+      formData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -25,7 +25,7 @@ export const handleAddDomainAndSubdomain = async (formData: any) => {
     return addDomainSubdomain.data
   } catch (error) {
     console.error('Error while submitting domain and subdomain data:', error)
-    throw error // Optional: re-throw for further handling
+    throw error
   }
 }
 
@@ -34,12 +34,9 @@ export const handleAllfetchDomainNameOnly = async () => {
     const domains = await axios.get(`${BASE_URL}/domain`)
 
     if (domains.data.success === false) {
-      console.log("no domain fetch")
       return null
     }
 
-
-    console.log("here is domains.data.data",domains.data.data)
     return domains.data.data
   } catch (error) {
     console.error('Error fetching API:', error)
@@ -51,10 +48,10 @@ export const handleFetchSubdomainByDomain = async (domainId: string) => {
     const response = await axios.get(
       `${BASE_URL}/subdomainsbydomain?domainId=${domainId}`
     )
-    
-      return response.data.success === true ? response.data.subdomains : null
+
+    return response.data.success === true ? response.data.subdomains : null
   } catch (error) {
-    console.error('Error fetching subdomains:', error) // Log the error for debugging
-    throw error // Throw the error so it can be handled by the calling function
+    console.error('Error fetching subdomains:', error)
+    throw error
   }
 }
