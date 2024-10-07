@@ -13,16 +13,15 @@ type Course = {
 }
 
 const CartDetails = ({ cartDetails }: { cartDetails: Course[] }) => {
-  console.log('Cart details have reached the UI', cartDetails)
 
-  // Calculate total price using useMemo for optimization
+  
   const totalAmount = useMemo(() => {
     return cartDetails.reduce((total, course) => total + course.price, 0)
   }, [cartDetails])
 
   return (
     <div className="flex flex-col lg:flex-row lg:space-x-6">
-      {/* Cart items section */}
+      
       <div className="flex-1 p-4">
         {cartDetails.length > 0 ? (
           cartDetails.map((course) => (

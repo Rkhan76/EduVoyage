@@ -23,46 +23,48 @@ import NotFound from './pages/NotFound'
 import CourseDetailsPage from './pages/CourseDetailsPage'
 import { IsSingnedIn } from './store/atoms/IsSignedIn'
 import CartPage from './pages/CartPage'
+import TeachCoursePage from './pages/TeachCoursePage'
+import CreateCoursePage from './pages/CreateCoursePage'
+
 
 const AppContent = () => {
   const setCart = useSetRecoilState(cartState)
   const setIsSignedIn = useSetRecoilState(IsSingnedIn)
 
- useEffect(() => {
-   const fetchCartOnAppLoad = async () => {
-     const token = Cookies.get('token')
-     if (token) {
-       const decodedToken = jwtDecode<JwtPayload>(token)
-       const isTokenExpired = () => {
-         return decodedToken.exp ? decodedToken.exp < Date.now() / 1000 : true
-       }
+  useEffect(() => {
+    const fetchCartOnAppLoad = async () => {
+      const token = Cookies.get('token')
+      if (token) {
+        const decodedToken = jwtDecode<JwtPayload>(token)
+        const isTokenExpired = () => {
+          return decodedToken.exp ? decodedToken.exp < Date.now() / 1000 : true
+        }
 
-       if (isTokenExpired()) {
-         setIsSignedIn(false)
-         return
-       }
+        if (isTokenExpired()) {
+          setIsSignedIn(false)
+          return
+        }
 
-       setIsSignedIn(true)
+        setIsSignedIn(true)
 
-       try {
-         const cartData = await handleFetchCart()
-         if (cartData) {
-           setCart(cartData)
-         } else {
-           console.warn('Cart is empty or not found')
-         }
-       } catch (err) {
-         console.error('Error fetching cart:', err)
-         setIsSignedIn(false)
-       }
-     } else {
-       setIsSignedIn(false)
-     }
-   }
+        try {
+          const cartData = await handleFetchCart()
+          if (cartData) {
+            setCart(cartData)
+          } else {
+            console.warn('Cart is empty or not found')
+          }
+        } catch (err) {
+          console.error('Error fetching cart:', err)
+          setIsSignedIn(false)
+        }
+      } else {
+        setIsSignedIn(false)
+      }
+    }
 
-   fetchCartOnAppLoad()
- }, [])
-
+    fetchCartOnAppLoad()
+  }, [])
 
   return (
     <>
@@ -70,24 +72,20 @@ const AppContent = () => {
       <main className="flex-grow container mx-auto p-4">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/plans&pricing" element={<Pricing />} />
-          <Route path="/terms-condition" element={<TermsCondition />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/teacher/course" element={<TeachCoursePage/>} />
+          <Route path="/addDomainAndSubdomain" element={<AddDomainSubdomainPage />} />
+          <Route path="/teacher/course/create" element={<CreateCoursePage/>} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/course/:courseId" element={<CourseDetailsPage />} />
           <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/plans&pricing" element={<Pricing />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/teachersignup" element={<SignupPage />} />
-          <Route path="/course/:courseId" element={<CourseDetailsPage />} />
-          <Route
-            path="/addDomainAndSubdomain"
-            element={<AddDomainSubdomainPage />}
-          />
-          <Route
-            path="/courses/:domainName/:subdomainName?"
-            element={<AllCoursesPage />}
-          />
+          <Route path="/terms-condition" element={<TermsCondition />} />
           <Route path="/try" element={<FetchDomainPage />} />
-          <Route path="/cart" element={<CartPage/>} />
+          <Route path="/courses/:domainName/:subdomainName?" element={<AllCoursesPage />} />
           <Route path="not-found" element={<NotFound />} />
         </Routes>
       </main>

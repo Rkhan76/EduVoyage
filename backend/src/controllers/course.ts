@@ -330,6 +330,39 @@ export async function handleViewCourseByDomainOnly(
   }
 }
 
+export async function handleViewCourseByTeacher(req: Request, res: Response) {
+  const { userId } = req.body.userDetails
+
+  try {
+    const courses = await prisma.course.findMany({
+      where: {
+        creatorId: userId,
+      },
+      include: {
+        lessons: true,
+        reviews: true,
+      },
+    })
+
+    if (courses.length === 0) {
+      return res
+        .status(404)
+        .json({ message: 'No courses found for this teacher.' })
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Successfully fetch the courses by teacher",
+      courses: courses
+    })
+  } catch (error) {
+    console.error('Error fetching courses:', error)
+    return res
+      .status(500)
+      .json({ message: 'An error occurred while fetching courses.' })
+  }
+}
+
 
 
 

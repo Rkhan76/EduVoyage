@@ -5,7 +5,8 @@ import {
   handleUpdateCourse,
   handleDeleteCourse,
   handleViewCourseByDomainAndSubdomains,
-  handleViewCourseByDomainOnly
+  handleViewCourseByDomainOnly,
+  handleViewCourseByTeacher
 } from '../controllers/course'
 import {
   handleAddLesson,
@@ -14,7 +15,7 @@ import {
   handleDeleteLesson,
 } from '../controllers/lesson'
 import {handleAuthentication} from "../middlewares/auth"
-import {handleCheckUserRole} from '../middlewares/checkUserRole'
+import {handleCheckUserRole, IsTeacher} from '../middlewares/checkUserRole'
 
 
 const router = express.Router()
@@ -33,5 +34,8 @@ router.get('/view/:id', handleViewCourse)
 router.post('/add',handleAuthentication,handleCheckUserRole, handleCreateCourse)
 router.put('/update/:id', handleAuthentication, handleCheckUserRole, handleUpdateCourse)
 router.delete("/delete/:id", handleAuthentication, handleCheckUserRole, handleDeleteCourse)
+
+//teacher course routes
+router.get('/teacher/view', handleAuthentication, IsTeacher, handleViewCourseByTeacher)
 
 export default router
