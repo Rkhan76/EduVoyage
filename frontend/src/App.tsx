@@ -22,6 +22,7 @@ import AllCoursesPage from './pages/AllCoursePage'
 import NotFound from './pages/NotFound'
 import CourseDetailsPage from './pages/CourseDetailsPage'
 import { IsSingnedIn } from './store/atoms/IsSignedIn'
+import CartPage from './pages/CartPage'
 
 const AppContent = () => {
   const setCart = useSetRecoilState(cartState)
@@ -86,6 +87,7 @@ const AppContent = () => {
             element={<AllCoursesPage />}
           />
           <Route path="/try" element={<FetchDomainPage />} />
+          <Route path="/cart" element={<CartPage/>} />
           <Route path="not-found" element={<NotFound />} />
         </Routes>
       </main>

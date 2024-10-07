@@ -81,3 +81,34 @@ export async function fetchCartForUser(req: Request, res: Response) {
     return res.status(500).json({ error: 'Failed to fetch cart' })
   }
 }
+
+export async function fetchCartDetails(req: Request, res: Response) {
+  const { userId } = req.body.userDetails
+
+  try {
+    const userCart = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { cart: true },
+    })
+
+    if (!userCart) {
+      return res.status(404).json({ error: 'User not found' })
+    }
+
+    const courseIds = userCart.cart?.courses
+    const courses = await prisma.course.findMany({
+      where: {
+        id: { in: courseIds },
+      },
+    })
+
+    return res.status(200).json({
+      success: true,
+      cart: courses,
+    })
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({ error: 'Failed to fetch cart details' })
+  }
+}
+

@@ -47,3 +47,34 @@ export const handleFetchCart = async () => {
   }
 }
 
+
+export const fetchCartDetails = async () => {
+  try {
+    const token = Cookies.get('token') 
+
+    if (!token) {
+      throw new Error('No token found, please sign in')
+    }
+
+    const response = await axios.get(
+      `${BASE_URL}/cart/details`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+
+    if (response.data.success) {
+      return response.data.cart
+    } else {
+      console.error('Error fetching cart details:', response.data.error)
+      return []
+    }
+  } catch (error) {
+    console.error('Failed to fetch cart details:', error)
+    return []
+  }
+}
+
+
