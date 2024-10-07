@@ -4,6 +4,7 @@ import { RecoilRoot, useSetRecoilState } from 'recoil'
 import { cartState } from './store/atoms/Cart'
 import { handleFetchCart } from './services/cart'
 import Cookies from 'js-cookie'
+import { jwtDecode, JwtPayload } from 'jwt-decode'
 import Navbar from './pages/Navbar'
 import Home from './pages/Home'
 import Pricing from './pages/Pricing'
@@ -20,28 +21,47 @@ import FetchDomainPage from './pages/FectchDomains'
 import AllCoursesPage from './pages/AllCoursePage'
 import NotFound from './pages/NotFound'
 import CourseDetailsPage from './pages/CourseDetailsPage'
+import { IsSingnedIn } from './store/atoms/IsSignedIn'
 
 const AppContent = () => {
   const setCart = useSetRecoilState(cartState)
-  
+  const setIsSignedIn = useSetRecoilState(IsSingnedIn)
 
-  useEffect(() => {
-    const fetchCartOnAppLoad = async () => {
-      const token = Cookies.get('token')
-      if (token) {
-        try {
-          const cartData = await handleFetchCart()
-          if (cartData) {
-            setCart(cartData)
-          }
-        } catch (err) {
-          console.error('Error fetching cart:', err)
-        }
-      }
-    }
+ useEffect(() => {
+   const fetchCartOnAppLoad = async () => {
+     const token = Cookies.get('token')
+     if (token) {
+       const decodedToken = jwtDecode<JwtPayload>(token)
+       const isTokenExpired = () => {
+         return decodedToken.exp ? decodedToken.exp < Date.now() / 1000 : true
+       }
 
-    fetchCartOnAppLoad()
-  }, [setCart])
+       if (isTokenExpired()) {
+         setIsSignedIn(false)
+         return
+       }
+
+       setIsSignedIn(true)
+
+       try {
+         const cartData = await handleFetchCart()
+         if (cartData) {
+           setCart(cartData)
+         } else {
+           console.warn('Cart is empty or not found')
+         }
+       } catch (err) {
+         console.error('Error fetching cart:', err)
+         setIsSignedIn(false)
+       }
+     } else {
+       setIsSignedIn(false)
+     }
+   }
+
+   fetchCartOnAppLoad()
+ }, [])
+
 
   return (
     <>
