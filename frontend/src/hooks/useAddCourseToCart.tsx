@@ -4,18 +4,19 @@ import { useRecoilState } from 'recoil'
 import { cartState } from '../store/atoms/Cart'
 import { handleAddCourseToCart } from '../services/cart'
 import { Course } from '../types/types'
+import { useNavigate } from 'react-router-dom'
 
 const useAddCourseToCart = (courseDetails: Course) => {
   const [cart, setCart] = useRecoilState(cartState)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const navigate = useNavigate()
 
-  const isCourseInCart = cart.includes(courseDetails.id) // Check if course is already in the cart
+  const isCourseInCart = cart.includes(courseDetails.id)
 
   const handleAddToCart = async () => {
     if (isCourseInCart) {
-      // Redirect to cart if the course is already in the cart
-      window.location.href = '/cart'
+      navigate('/cart')
       return
     }
 
@@ -24,7 +25,7 @@ const useAddCourseToCart = (courseDetails: Course) => {
 
     try {
       await handleAddCourseToCart(courseDetails.id)
-      setCart([...cart, courseDetails.id]) // Add the course ID to the cart
+      setCart([...cart, courseDetails.id])
     } catch (err) {
       setError('Failed to add course to cart.')
     } finally {
