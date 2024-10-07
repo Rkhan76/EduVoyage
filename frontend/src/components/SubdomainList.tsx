@@ -15,7 +15,6 @@ interface SubdomainListProps {
 
 const SubdomainList: React.FC<SubdomainListProps> = React.memo(
 ({ subdomains, onSubdomainClick }) => {
-  console.log(subdomains, "subdomain is here for your cll")
   return (
     <div className="grid grid-cols-2 gap-4">
       {subdomains.map((subdomain) => (

@@ -40,7 +40,6 @@ export const useFetchCourseBySubdomain = () => {
 
         if (data) {
           setCourses(data)
-          console.log(data)
         }
       } catch (error) {
         setError('Failed to fetch the courses')
@@ -53,9 +52,6 @@ export const useFetchCourseBySubdomain = () => {
       getCourseByDomainAndSubdomain()
     }
   }, [selectedDomainName, selectedSubdomainName])
-
-  console.log('selectedSubdomainName : ', selectedSubdomainName)
-  console.log('selectedDomainName : ', selectedDomainName)
 
   return { courses, loading, error }
 }

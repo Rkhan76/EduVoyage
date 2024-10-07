@@ -41,7 +41,6 @@ export const handleFetchCart = async () => {
     })
 
     if(response.data.success === true) return response.data.cart
-    console.log("fetched the cart infor", response.data.cart)
     return []
   } catch (error) {
     throw new Error('Failed to fetch cart data')
