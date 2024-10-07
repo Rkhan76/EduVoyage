@@ -32,13 +32,10 @@ const Navbar = () => {
               Home
             </NavLink>
           </li>
-          {/* New Category Dropdown */}
           <li className="relative group flex flex-col justify-center">
-            {/* Main link with hover effect */}
             <span className="text-white hover:text-yellow-400 cursor-pointer">
               Category
             </span>
-            {/* Dropdown menu */}
             <ul className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-lg overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <li className="hover:bg-gray-200">
                 <NavLink
@@ -100,7 +97,7 @@ const Navbar = () => {
             </NavLink>
           </li>
           {isSignedIn ? (
-            <h1>hllo</h1>
+            <h1 className='text-white'>logout</h1>
           ) : (
             <>
               <li>
