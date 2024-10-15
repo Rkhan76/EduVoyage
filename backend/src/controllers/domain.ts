@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { Request, Response } from 'express'
-import {domainAndSubdomainInput, DomainAndSubdomainParams} from '@rkhan76/common'
+import {domainAndSubdomainInput, DomainAndSubdomainParams, DomainNameOnly, GetDomainResponse} from '@rkhan76/common'
+
 
 const prisma = new PrismaClient()
 
@@ -158,27 +159,35 @@ export async function handleGetDomainsWithSubdomains(
   }
 }
 
-export async function handleGetDomainOnly(req: Request, res: Response) {
+export async function handleGetDomainOnly(
+  req: Request,
+  res: Response<GetDomainResponse>
+) {
   try {
-    const domains = await prisma.domain.findMany()
+    const domains: DomainNameOnly[] = await prisma.domain.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    })
 
-    if (!domains) {
-      return res.status(400).json({
+    if (!domains || domains.length === 0) {
+      return res.status(404).json({
         success: false,
-        message: 'something went wrong while fetching domains',
+        message: 'No domains found',
       })
     }
 
     return res.status(200).json({
       success: true,
-      message: 'successfully fetch the domains',
+      message: 'Successfully fetched the domains',
       data: domains,
     })
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return res.status(500).json({
       success: false,
-      message: 'something went wrong with server',
+      message: 'Something went wrong with the server',
     })
   }
 }

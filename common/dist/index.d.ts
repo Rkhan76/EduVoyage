@@ -43,3 +43,24 @@ export declare const domainAndSubdomainInput: z.ZodObject<{
     subdomains?: string[] | undefined;
 }>;
 export type DomainAndSubdomainParams = z.infer<typeof domainAndSubdomainInput>;
+export interface DomainNameOnly {
+    id: string;
+    name: string;
+}
+export interface GetDomainResponse {
+    success: boolean;
+    message: string;
+    data?: DomainNameOnly[];
+}
+export interface CartWithCourseIdOnlyProps {
+    success: boolean;
+    cart: string[];
+}
+export declare const UserId: z.ZodObject<{
+    UserId: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    UserId: string;
+}, {
+    UserId: string;
+}>;
+export type UserId = z.infer<typeof UserId>;

@@ -28,3 +28,27 @@ export const domainAndSubdomainInput = z.object({
 })
 
 export type DomainAndSubdomainParams = z.infer<typeof domainAndSubdomainInput>
+
+////
+export interface DomainNameOnly {
+  id: string
+  name: string
+}
+
+export interface GetDomainResponse {
+  success: boolean
+  message: string
+  data?: DomainNameOnly[]
+}
+
+export interface CartWithCourseIdOnlyProps {
+  success: boolean
+  cart: string[]
+}
+
+// typecheck of User id input
+export const UserId = z.object({
+  UserId: z.string()
+})
+
+export type UserId = z.infer<typeof UserId>

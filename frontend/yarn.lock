@@ -439,10 +439,10 @@
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.19.2.tgz#0c896535473291cb41f152c180bedd5680a3b273"
   integrity sha512-baiMx18+IMuD1yyvOGaHM9QrVUPGGG0jC+z+IPHnRJWUAUvaKuWKyE8gjDj2rzv3sz9zOGoRSPgeBVHRhZnBlA==
 
-"@rkhan76/common@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@rkhan76/common/-/common-1.0.8.tgz#71f517f271acd00669f387eba159c93ce4152dfc"
-  integrity sha512-hUMgJwuCysJCyPmdzDwqlI6lKbA0ge5/lmZa1iW4PDBddonFmssB0XUGY8EqpqqwU1531Xs+otNPTivMS6m8gQ==
+"@rkhan76/common@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@rkhan76/common/-/common-1.0.10.tgz#1c10fe410a6c130b4d0ca5709b083793aa57c5f3"
+  integrity sha512-I4eD3IBGwsTq9RQLsjgFY6jlSX7jjQ64uXz0JyHk6cTwtbmO+DZX4vkppjJ58rXV1wLAxvKfB2TDvGtL0XlCtQ==
   dependencies:
     zod "^3.23.8"
 

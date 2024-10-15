@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
 import { PrismaClient } from '@prisma/client'
+import {z} from "zod"
+import {CartWithCourseIdOnlyProps, UserId} from "@rkhan76/common"
 
 const prisma = new PrismaClient()
 
@@ -56,31 +58,56 @@ export async function addCourseToCart(req: Request, res: Response) {
   }
 }
 
-export async function fetchCartForUser(req: Request, res: Response) {
-  const { userId } = req.body.userDetails
+
+
+
+// Zod schema for validating the request body
+const fetchCartSchema = z.object({
+  userDetails: z.object({
+    userId: z.string().nonempty('User ID is required'),
+  }),
+});
+
+export async function fetchCartForUserWithCourseIdOnly(
+  req: Request,
+  res: Response
+): Promise<Response> {
+  // Validate the request body using Zod
+  const parseResult = fetchCartSchema.safeParse(req.body);
+
+  if (!parseResult.success) {
+    return res.status(400).json({
+      success: false,
+      message: parseResult.error.errors.map((err) => err.message).join(', '),
+    });
+  }
+
+  const { userId } = parseResult.data.userDetails;
 
   try {
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      include: { cart: true },
-    })
+      include: {
+        cart: true, // No need to select nested courses since it's a String[]
+      },
+    });
 
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' })
+    if (!user || !user.cart) {
+      return res.status(404).json({ success: false, cart: [] });
     }
 
-    if (!user.cart) {
-      return res.status(200).json({ cart: [] })
-    }
+    const courseIds = user.cart.courses; // Directly use the courses array
 
     return res.status(200).json({
       success: true,
-      cart: user.cart.courses || [],
-    })
+      cart: courseIds,
+    });
   } catch (error) {
-    return res.status(500).json({ error: 'Failed to fetch cart' })
+    console.error('Error fetching cart:', error);
+    return res.status(500).json({ success: false, cart: [] });
   }
 }
+
 
 export async function fetchCartDetails(req: Request, res: Response) {
   const { userId } = req.body.userDetails

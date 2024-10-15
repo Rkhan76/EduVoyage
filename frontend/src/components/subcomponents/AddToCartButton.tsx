@@ -17,7 +17,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     <button
       onClick={onClick}
       className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-      disabled={loading} // Disable the button while loading
+      disabled={loading} 
     >
       {loading
         ? 'Adding...'

@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@rkhan76/common": "^1.0.8",
+    "@rkhan76/common": "^1.0.10",
     "@types/js-cookie": "^3.0.6",
     "axios": "^1.7.7",
     "js-cookie": "^3.0.5",

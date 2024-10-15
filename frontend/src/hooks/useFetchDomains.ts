@@ -1,20 +1,15 @@
-// src/hooks/useFetchDomains.ts
 import { useState, useEffect } from 'react'
 import { handleAllfetchDomainNameOnly } from "../services/domainAndSubdomain"
-import { selectedDomainState } from '../store/atoms/DomainAndSubdomain'
-import { useSetRecoilState } from 'recoil'
+// import { selectedDomainState } from '../store/atoms/DomainAndSubdomain'
+// import { useSetRecoilState } from 'recoil'
+import { DomainNameOnly } from '@rkhan76/common'
 
-interface Domain {
-  id: string
-  name: string
-  courses: any[]
-}
 
 export const useFetchDomains = () => {
-  const [domains, setDomains] = useState<Domain[]>([])
+  const [domains, setDomains] = useState<DomainNameOnly[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
-  const setSelectedDomain = useSetRecoilState(selectedDomainState)
+  // const setSelectedDomain = useSetRecoilState(selectedDomainState)
 
   useEffect(() => {
     const getDomains = async () => {

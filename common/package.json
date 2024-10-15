@@ -1,10 +1,13 @@
 {
   "name": "@rkhan76/common",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "main": "dist/index.js",
   "license": "MIT",
   "types": "dist/index.d.ts",
   "dependencies": {
     "zod": "^3.23.8"
+  },
+  "scripts": {
+    "build": "tsc"  
   }
 }

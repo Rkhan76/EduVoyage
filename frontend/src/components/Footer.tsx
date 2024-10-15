@@ -1,6 +1,5 @@
-import React from 'react'
 import { NavLink } from 'react-router-dom'
-import Logo from '../assets/logo-white.png'
+import EduVoyageLogoTransparent from '../assets/eduvoyageLogotransparent.png'
 import FacebookLogo from '../assets/facebook-logo.png'
 import LinkedInLogo from '../assets/linkedin-logo.png'
 import TwitterLogo from '../assets/twitter-logo.png'
@@ -8,11 +7,11 @@ import InstagramLogo from '../assets/instagram-logo.png'
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white p-6">
+    <footer className="bg-custom-black-low text-white p-6">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-start">
         <div className="mb-6 md:mb-0">
           <img
-            src={Logo}
+            src={EduVoyageLogoTransparent}
             alt="EduVoyage Logo"
             className="h-12 md:h-16 rounded-full"
           />

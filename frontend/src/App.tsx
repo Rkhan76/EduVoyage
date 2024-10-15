@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { RecoilRoot, useSetRecoilState } from 'recoil'
 import { cartState } from './store/atoms/Cart'
-import { handleFetchCart } from './services/cart'
+import { handleFetchCartOnLoad } from './services/cart'
 import Cookies from 'js-cookie'
 import { jwtDecode, JwtPayload } from 'jwt-decode'
 import Navbar from './pages/Navbar'
@@ -25,12 +25,18 @@ import { IsSingnedIn } from './store/atoms/IsSignedIn'
 import CartPage from './pages/CartPage'
 import TeachCoursePage from './pages/TeachCoursePage'
 import CreateCoursePage from './pages/CreateCoursePage'
+import Sample from './pages/Sample'
+import Checkout from './components/Checkout'
+import MylearningPage from './pages/MylearningPage'
+
 
 
 const AppContent = () => {
   const setCart = useSetRecoilState(cartState)
   const setIsSignedIn = useSetRecoilState(IsSingnedIn)
 
+
+  // i have to change this code 
   useEffect(() => {
     const fetchCartOnAppLoad = async () => {
       const token = Cookies.get('token')
@@ -48,7 +54,7 @@ const AppContent = () => {
         setIsSignedIn(true)
 
         try {
-          const cartData = await handleFetchCart()
+          const cartData = await handleFetchCartOnLoad()
           if (cartData) {
             setCart(cartData)
           } else {
@@ -69,7 +75,7 @@ const AppContent = () => {
   return (
     <>
       <Navbar />
-      <main className="flex-grow container mx-auto p-4">
+      <main className="flex-grow container mx-auto">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/teacher/course" element={<TeachCoursePage/>} />
@@ -84,7 +90,9 @@ const AppContent = () => {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/teachersignup" element={<SignupPage />} />
           <Route path="/terms-condition" element={<TermsCondition />} />
-          <Route path="/try" element={<FetchDomainPage />} />
+          {/* <Route path="/try" element={<Sample/>} /> */}
+          <Route path="/cart/checkout" element={<Checkout/>} />
+          <Route path="/mylearning" element={<MylearningPage/>}/>
           <Route path="/courses/:domainName/:subdomainName?" element={<AllCoursesPage />} />
           <Route path="not-found" element={<NotFound />} />
         </Routes>

@@ -1,5 +1,6 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie' 
+import { DomainNameOnly} from '@rkhan76/common'
 
 const BASE_URL = import.meta.env.VITE_API_URL
 
@@ -29,17 +30,20 @@ export const handleAddDomainAndSubdomain = async (formData: any) => {
   }
 }
 
-export const handleAllfetchDomainNameOnly = async () => {
+export const handleAllfetchDomainNameOnly = async (): Promise<
+  DomainNameOnly[] | null
+> => {
   try {
-    const domains = await axios.get(`${BASE_URL}/domain`)
+    const response = await axios.get(`${BASE_URL}/domain`)
 
-    if (domains.data.success === false) {
+    if (!response.data.success) {
       return null
     }
 
-    return domains.data.data
+    return response.data.data as DomainNameOnly[]
   } catch (error) {
     console.error('Error fetching API:', error)
+    return null 
   }
 }
 

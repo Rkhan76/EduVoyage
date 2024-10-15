@@ -34,9 +34,13 @@ export async function handleGenerateToken({
   roles
 }: DecodedToken): Promise<string> {
   try {
-    const token = jwt.sign({ userId, username,fullname, roles }, process.env.SECRET_KEY!, {
-      expiresIn: '7d'
-    });
+    const token = jwt.sign(
+      { userId, username, fullname, roles },
+      process.env.SECRET_KEY_JWT!,
+      {
+        expiresIn: '7d',
+      }
+    )
     return token;
   } catch (error) {
     console.error('Error generating token:', error);
@@ -48,7 +52,10 @@ export async function handleVerifyToken(
   token: string
 ): Promise<DecodedToken | null> {
   try {
-    const decoded = jwt.verify(token, process.env.SECRET_KEY!) as DecodedToken;
+    const decoded = jwt.verify(
+      token,
+      process.env.SECRET_KEY_JWT!
+    ) as DecodedToken
     return decoded;
   } catch (error) {
     console.error('Error verifying token:', error);

@@ -12,7 +12,7 @@ const ShoppingCartLogo = () => {
       <img
         src={ShoppingCartImage}
         alt="Shopping Cart Logo"
-        className="w-8 h-8"
+        className="h-6"
       />
       {isSignedIn && (
         <span className="absolute top-0 right-0 transform translate-x-1 -translate-y-1 bg-red-600 text-white rounded-full px-1 text-xs font-bold">

@@ -8,6 +8,10 @@ const TeachCourse = ({ courses }: { courses: Course[] }) => {
     navigate('/teacher/course/create')
   }
 
+  const handleAddLesson = (courseId: string) => {
+    navigate(`/teacher/course/${courseId}/lesson/add`)
+  }
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
       <div className="flex justify-between items-center mb-6">
@@ -41,9 +45,16 @@ const TeachCourse = ({ courses }: { courses: Course[] }) => {
                 {course.subdomainName.join(', ')}
               </span>
             </p>
-            <p className="text-green-500 font-bold text-lg">
+            <p className="text-green-500 font-bold text-lg mb-4">
               Price: ${course.price.toFixed(2)}
             </p>
+
+            <button
+              onClick={() => handleAddLesson(course.id)}
+              className="mt-2 w-full bg-indigo-500 text-white py-2 rounded-md shadow hover:bg-indigo-600 transition"
+            >
+              Add Lesson
+            </button>
           </div>
         ))}
       </div>

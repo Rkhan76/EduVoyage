@@ -10,13 +10,12 @@ export async function handleAddLesson(
   req: Request<any, any, LessonBody>,
   res: Response
 ) {
+  // Extracting the necessary fields from the request body
+  const { title, content, videoUrl, videoLength, videoFormat, courseId } =
+    req.body
 
-    //add zod validation
-  const { title, content, videoUrl, videoLength, videoFormat, courseId } = req.body
-
- 
   try {
-    // Create a new lesson
+    // Create a new lesson using Prisma ORM
     const lesson = await prisma.lesson.create({
       data: {
         title,
@@ -28,30 +27,35 @@ export async function handleAddLesson(
       },
     })
 
-    if(!lesson){
-        return res.status(400).json({
-          success: false,
-          message: 'something went wrong while adding lesson to course',
-        })
+    // Check if the lesson was created successfully
+    if (!lesson) {
+      return res.status(400).json({
+        success: false,
+        message: 'Something went wrong while adding lesson to course',
+      })
     }
 
-   return res.status(STATUS_CODE.CREATED).json({
-     success: true,
-     message: 'Lesson created successfully',
-     lesson,
-   })
+    // Respond with a success message and the created lesson
+    return res.status(STATUS_CODE.CREATED).json({
+      success: true,
+      message: 'Lesson created successfully',
+      lesson,
+    })
   } catch (error) {
+    // Log the error for debugging
     console.error('Error creating lesson:', error)
 
-   
+    // Respond with a failure message
     return res.status(500).json({
       success: false,
       message: 'Failed to create lesson',
     })
   } finally {
+    // Ensure to disconnect Prisma client
     await prisma.$disconnect()
   }
 }
+
 
 export async function handleViewLesson(
   req: Request<any, any, LessonBody>,

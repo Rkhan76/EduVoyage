@@ -14,23 +14,30 @@ enum UserRole {
   BOTH
 }
 
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
 
 
 
 model User {
-  id        String     @id @default(uuid())
-  fullname  String
-  username  String     @unique @db.VarChar(50)
-  password  String
-  roles     UserRole[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id          String       @id @default(uuid())
+  fullname    String
+  username    String       @unique @db.VarChar(50)
+  password    String
+  roles       UserRole[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 
-  courses   Course[]   @relation("CourseCreator")
+  courses     Course[]     @relation("CourseCreator")
   enrollments Enrollment[]
-  reviews   Review[]
+  reviews     Review[]
+  cart        Cart?
 
-  cart      Cart?
+  payments    Payment[]    @relation("UserPayments") // Adding the relation field
 }
 
 model Course {
@@ -65,14 +72,17 @@ model Lesson {
 
 
 model Enrollment {
-  id        String     @id @default(uuid())
+  id        String   @id @default(uuid())
   userId    String
   courseId  String
-  createdAt DateTime   @default(now())
+  paymentId String?  // Optional relation to payment
 
-  user      User       @relation(fields: [userId], references: [id])
-  course    Course     @relation(fields: [courseId], references: [id])
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+  course    Course   @relation(fields: [courseId], references: [id])
 }
+
 
 model Review {
   id        String     @id @default(uuid())
@@ -109,4 +119,23 @@ model Cart {
   userId  String?  @unique
 }
 
+model Payment {
+  id              String        @id @default(uuid())      // Unique Payment ID
+  orderId         String        @unique                   // Razorpay Order ID or payment gateway reference
+  paymentId       String?       @unique                   // Razorpay Payment ID (if available after success)
+  signature       String?                                  // Razorpay signature for verification
+
+  userId          String                                   // User who made the payment
+  user            User        @relation("UserPayments", fields: [userId], references: [id]) // Updated relation
+
+  amount          Decimal      @default(0.00)              // Total payment amount
+  currency        String       @default("INR")             // Currency type (default INR)
+  status          PaymentStatus                             // Enum: PENDING, SUCCESS, FAILED
+  paymentMethod   String?                                   // e.g., 'Credit Card', 'UPI', 'Wallet'
+
+  courseItems     Json                                      // List of purchased courses (as JSON)
+
+  createdAt       DateTime     @default(now())             // Timestamp of payment initiation
+  updatedAt       DateTime     @updatedAt                  // Auto-updates on changes
+}
 

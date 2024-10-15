@@ -30,7 +30,8 @@ export const handleAddCourseToCart = async (courseId: string) => {
   }
 }
 
-export const handleFetchCart = async () => {
+// fetch cart with courses id only
+export const handleFetchCartOnLoad = async () => {
   const token = Cookies.get('token')
 
   try {
@@ -47,7 +48,7 @@ export const handleFetchCart = async () => {
   }
 }
 
-
+// fetch cart detail with course details
 export const fetchCartDetails = async () => {
   try {
     const token = Cookies.get('token') 

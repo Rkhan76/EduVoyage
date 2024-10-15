@@ -8,7 +8,7 @@ import { cartState } from '../store/atoms/Cart'
 import { useNavigate } from 'react-router-dom'
 import SigninForm from '../components/SigninForm'
 import { useSigninForm } from '../hooks/useSigninForm'
-import { handleFetchCart } from '../services/cart'
+import { handleFetchCartOnLoad } from '../services/cart'
 import { toast } from 'react-toastify'
 
 const SigninContainer: React.FC = () => {
@@ -29,7 +29,7 @@ const SigninContainer: React.FC = () => {
         })
 
         // Fetch cart after successful signin
-        const cartData = await handleFetchCart()
+        const cartData = await handleFetchCartOnLoad()
         setCart(cartData)
 
         setIsSignedIn(true)
