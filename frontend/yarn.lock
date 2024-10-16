@@ -434,15 +434,20 @@
   resolved "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
+"@react-oauth/google@^0.12.1":
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/@react-oauth/google/-/google-0.12.1.tgz#b76432c3a525e9afe076f787d2ded003fcc1bee9"
+  integrity sha512-qagsy22t+7UdkYAiT5ZhfM4StXi9PPNvw0zuwNmabrWyMKddczMtBIOARflbaIj+wHiQjnMAsZmzsUYuXeyoSg==
+
 "@remix-run/router@1.19.2":
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.19.2.tgz#0c896535473291cb41f152c180bedd5680a3b273"
   integrity sha512-baiMx18+IMuD1yyvOGaHM9QrVUPGGG0jC+z+IPHnRJWUAUvaKuWKyE8gjDj2rzv3sz9zOGoRSPgeBVHRhZnBlA==
 
-"@rkhan76/common@^1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@rkhan76/common/-/common-1.0.10.tgz#1c10fe410a6c130b4d0ca5709b083793aa57c5f3"
-  integrity sha512-I4eD3IBGwsTq9RQLsjgFY6jlSX7jjQ64uXz0JyHk6cTwtbmO+DZX4vkppjJ58rXV1wLAxvKfB2TDvGtL0XlCtQ==
+"@rkhan76/common@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@rkhan76/common/-/common-1.0.11.tgz#4ae22c9c21373fae06030daa6172a0b3036f215b"
+  integrity sha512-qit3DRAYkvuCQeXneYJrHG9xCsLcFaMN1Y9zfNo8XWZvA6xqGzB78o5AiQU3VQqP+o19XGlaUaQLisGjK5DHIQ==
   dependencies:
     zod "^3.23.8"
 

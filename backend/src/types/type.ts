@@ -9,7 +9,7 @@ export interface AuthBody {
 
 export interface DecodedToken {
   userId: string
-  username: string
+  email: string
   fullname: string
   roles: string[]
 }

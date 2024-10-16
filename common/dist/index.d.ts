@@ -6,32 +6,49 @@ export declare enum UserRole {
 }
 export declare const signupInput: z.ZodObject<{
     fullname: z.ZodString;
-    username: z.ZodString;
+    email: z.ZodString;
     password: z.ZodString;
     role: z.ZodOptional<z.ZodNativeEnum<typeof UserRole>>;
+    avatar: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     fullname: string;
-    username: string;
+    email: string;
     password: string;
     role?: UserRole | undefined;
+    avatar?: string | undefined;
 }, {
     fullname: string;
-    username: string;
+    email: string;
     password: string;
     role?: UserRole | undefined;
+    avatar?: string | undefined;
 }>;
 export type SignupParams = z.infer<typeof signupInput>;
 export declare const signinInput: z.ZodObject<{
-    username: z.ZodString;
+    email: z.ZodString;
     password: z.ZodString;
 }, "strip", z.ZodTypeAny, {
-    username: string;
+    email: string;
     password: string;
 }, {
-    username: string;
+    email: string;
     password: string;
 }>;
 export type SigninParams = z.infer<typeof signinInput>;
+export declare const googleSigninInput: z.ZodObject<{
+    email: z.ZodString;
+    password: z.ZodNullable<z.ZodString>;
+    googleId: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    email: string;
+    password: string | null;
+    googleId: string;
+}, {
+    email: string;
+    password: string | null;
+    googleId: string;
+}>;
+export type GoogleSigninParams = z.infer<typeof googleSigninInput>;
 export declare const domainAndSubdomainInput: z.ZodObject<{
     domainName: z.ZodString;
     subdomains: z.ZodDefault<z.ZodArray<z.ZodString, "many">>;

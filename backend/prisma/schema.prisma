@@ -24,21 +24,26 @@ enum PaymentStatus {
 
 
 model User {
-  id          String       @id @default(uuid())
-  fullname    String
-  username    String       @unique @db.VarChar(50)
-  password    String
-  roles       UserRole[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id           String       @id @default(uuid())
+  fullname     String
+  email        String       @unique @db.VarChar(100) // Email field as unique identifier
+  password     String?      // Make password optional for Google signup
+  googleId     String?      @unique // Optional field to store Google user ID
+  roles        UserRole[]   
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
 
-  courses     Course[]     @relation("CourseCreator")
-  enrollments Enrollment[]
-  reviews     Review[]
-  cart        Cart?
+  courses      Course[]     @relation("CourseCreator")
+  enrollments  Enrollment[]
+  reviews      Review[]
+  cart         Cart?
 
-  payments    Payment[]    @relation("UserPayments") // Adding the relation field
+  payments     Payment[]    @relation("UserPayments") 
+
+  avatar       String?      // Optional field for the user's avatar
 }
+
+
 
 model Course {
   id             String     @id @default(uuid())

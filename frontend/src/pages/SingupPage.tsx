@@ -3,6 +3,8 @@ import MindBulbImg from '../assets/signin-side-image.png'
 import TeacherImage from '../assets/teacherImage.png'
 import SignupContainer from '../container/SignupContainer'
 import { useLocation } from 'react-router-dom'
+import GoogleAuthContainer from '../container/GoogleAuthContainer'
+// import { GoogleAuthWrapper } from '../components/subcomponents/GoogleAuthWrapper'
 
 const SignupPage: React.FC = () => {
   const location = useLocation()
@@ -20,6 +22,7 @@ const SignupPage: React.FC = () => {
         </div>
         <div className="w-1/2 p-6 flex items-center">
           <SignupContainer />
+          <GoogleAuthContainer/>
         </div>
       </div>
     </div>
