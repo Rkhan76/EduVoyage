@@ -14,14 +14,16 @@ const SignupForm: React.FC<SignupFormProps> = ({
         value={formData.fullname}
         onChange={onChange}
         type="text"
+        required
         className="w-full p-3 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-      <label className="block mb-2 text-gray-700 font-bold">Username</label>
+      <label className="block mb-2 text-gray-700 font-bold">Email</label>
       <input
-        name="username"
-        value={formData.username}
+        name="email"
+        value={formData.email}
         onChange={onChange}
-        type="text"
+        type="email"
+        required
         className="w-full p-3 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <label className="block mb-2 text-gray-700 font-bold">Password</label>
@@ -30,6 +32,7 @@ const SignupForm: React.FC<SignupFormProps> = ({
         value={formData.password}
         onChange={onChange}
         type="password"
+        required
         className="w-full p-3 mb-6 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <button

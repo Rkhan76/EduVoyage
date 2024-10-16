@@ -3,7 +3,7 @@ import { useState } from 'react'
 export const useSignupForm = () => {
   const [formData, setFormData] = useState({
     fullname: '',
-    username: '',
+    email: '',
     password: '',
   })
 
@@ -15,7 +15,7 @@ export const useSignupForm = () => {
   const resetFormData = () => {
     setFormData({
       fullname: '',
-      username: '',
+      email: '',
       password: '',
     })
   }

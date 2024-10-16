@@ -1,8 +1,9 @@
-// src/pages/SigninPage/SigninPage.tsx
-
-import MindBulbImg from '../assets/signin-side-image.png'
+// SigninPage.tsx
 import React from 'react'
+import MindBulbImg from '../assets/signin-side-image.png'
 import SigninContainer from '../container/SigninContainer'
+import GoogleAuthContainer from '../container/GoogleAuthContainer'
+
 
 const SigninPage: React.FC = () => {
   return (
@@ -15,8 +16,9 @@ const SigninPage: React.FC = () => {
             className="w-full h-auto rounded-lg"
           />
         </div>
-        <div className="w-1/2 p-6 flex items-center">
+        <div className="w-1/2 p-6 flex flex-col items-center">
           <SigninContainer />
+          <GoogleAuthContainer/>
         </div>
       </div>
     </div>

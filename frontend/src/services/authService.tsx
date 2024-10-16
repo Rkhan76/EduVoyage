@@ -6,11 +6,11 @@ import { SignupParams, SinginParams } from "@rkhan76/common"
 const BASE_URL = import.meta.env.VITE_API_URL
 
 
-export const signupUser = async ({ fullname, username, password, role }: SignupParams) => {
+export const signupUser = async ({ fullname, email, password, role }: SignupParams) => {
   try {
     const response = await axios.post(`${BASE_URL}/user/signup`, {
       fullname,
-      username,
+      email,
       password,
       role
     })
@@ -29,18 +29,15 @@ export const signupUser = async ({ fullname, username, password, role }: SignupP
 
 
 
-export const signinUser = async ({ username, password }: SinginParams) => {
+export const signinUser = async ({ email, password }: SinginParams) => {
   try {
     const response = await axios.post(`${BASE_URL}/user/signin`, {
-      username,
+      email,
       password,
     })
 
-    console.log(response)
-    if (response.status === 200) {
-      const token = response.data.userData.token
-      Cookies.set('token', token, { expires: 7, path: '/' })
-      console.log(Cookies)
+    if (response.data.success === true) {
+      console.log("signin data has been reached to frontend service", response.data)
       return response.data
     } else {
       throw new Error('Unexpected response status')
@@ -49,5 +46,15 @@ export const signinUser = async ({ username, password }: SinginParams) => {
     console.error('Sign-in failed:', err)
     throw err
   }
+}
+
+export const signinWithGoogle = async (code: string, role: string)=>{
+  console.log("role on google ", role)
+  const response = await axios.get(
+    `${BASE_URL}/user/google-login?code=${code}&role=${role}`
+  )
+
+  return response
+   
 }
 

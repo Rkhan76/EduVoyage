@@ -29,18 +29,21 @@ export async function handleComparePassword(
 
 export async function handleGenerateToken({
   userId,
-  username,
+  email,
   fullname,
   roles
 }: DecodedToken): Promise<string> {
+  console.log("handleGenerate function ", roles)
   try {
     const token = jwt.sign(
-      { userId, username, fullname, roles },
+      { userId, email, fullname, roles },
       process.env.SECRET_KEY_JWT!,
       {
         expiresIn: '7d',
       }
     )
+
+    console.log('token generate function ', token)
     return token;
   } catch (error) {
     console.error('Error generating token:', error);

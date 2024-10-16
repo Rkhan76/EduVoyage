@@ -28,6 +28,8 @@ import CreateCoursePage from './pages/CreateCoursePage'
 import Sample from './pages/Sample'
 import Checkout from './components/Checkout'
 import MylearningPage from './pages/MylearningPage'
+import { GoogleOAuthProvider} from '@react-oauth/google'
+import GoogleAuthContainer from './container/GoogleAuthContainer'
 
 
 
@@ -72,29 +74,64 @@ const AppContent = () => {
     fetchCartOnAppLoad()
   }, [])
 
+  const GoogleAuthWrapper = ({ children }: { children: any }) => {
+    return (
+      <GoogleOAuthProvider clientId="1054203565090-e466pidpblcun1r9h0k7psek6i8laq5q.apps.googleusercontent.com">
+        {children}
+      </GoogleOAuthProvider>
+    )
+  }
+
   return (
     <>
       <Navbar />
       <main className="flex-grow container mx-auto">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/teacher/course" element={<TeachCoursePage/>} />
-          <Route path="/addDomainAndSubdomain" element={<AddDomainSubdomainPage />} />
-          <Route path="/teacher/course/create" element={<CreateCoursePage/>} />
+          <Route path="/teacher/course" element={<TeachCoursePage />} />
+          <Route
+            path="/addDomainAndSubdomain"
+            element={<AddDomainSubdomainPage />}
+          />
+          <Route path="/teacher/course/create" element={<CreateCoursePage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/course/:courseId" element={<CourseDetailsPage />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/plans&pricing" element={<Pricing />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/signin" element={<SigninPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/teachersignup" element={<SignupPage />} />
+          <Route
+            path="/signin"
+            element={
+              <GoogleAuthWrapper>
+                <SigninPage />
+              </GoogleAuthWrapper>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <GoogleAuthWrapper>
+                <SignupPage />
+              </GoogleAuthWrapper>
+            }
+          />
+          <Route
+            path="/teachersignup"
+            element={
+              <GoogleAuthWrapper>
+                <SigninPage />
+              </GoogleAuthWrapper>
+            }
+          />
           <Route path="/terms-condition" element={<TermsCondition />} />
           {/* <Route path="/try" element={<Sample/>} /> */}
-          <Route path="/cart/checkout" element={<Checkout/>} />
-          <Route path="/mylearning" element={<MylearningPage/>}/>
-          <Route path="/courses/:domainName/:subdomainName?" element={<AllCoursesPage />} />
-          <Route path="not-found" element={<NotFound />} />
+          <Route path="/cart/checkout" element={<Checkout />} />
+          <Route path="/mylearning" element={<MylearningPage />} />
+          <Route
+            path="/courses/:domainName/:subdomainName?"
+            element={<AllCoursesPage />}
+          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
