@@ -76,7 +76,7 @@ const AppContent = () => {
 
   const GoogleAuthWrapper = ({ children }: { children: any }) => {
     return (
-      <GoogleOAuthProvider clientId="1054203565090-e466pidpblcun1r9h0k7psek6i8laq5q.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId="">
         {children}
       </GoogleOAuthProvider>
     )
